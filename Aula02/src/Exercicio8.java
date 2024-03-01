@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Exercicio7 {
+public class Exercicio8 {
     
     public static void main(String[] args) {
         
@@ -9,10 +9,10 @@ public class Exercicio7 {
         System.out.print("Informe um número: ");
         int num = input.nextInt();
 
-        if(num > 100 && num < 200){
-            System.out.println("O número " + num + " está no intervalo entre 100 e 200!");
+        if(num >= 50){
+            System.out.println("O número " + num + " é maior ou igual a 50!");
         } else {
-            System.out.println("O número " + num + " não está no intervalo entre 100 e 200!");
+            System.out.println("O número " + num + " é menor que 50!");
         }
 
     }
