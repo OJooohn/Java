@@ -11,6 +11,8 @@ public class Exercicio5 {
         
         System.out.print("Digite o valor da variável A: ");
         int b = input.nextInt();
+
+        System.out.println("Valores originais | A: " + a + " e B: " + b);
         
         int aux = a;
         a = b;
