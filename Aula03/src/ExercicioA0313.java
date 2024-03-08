@@ -11,7 +11,6 @@ public class ExercicioA0313 {
     n = input.nextInt();
 
     int[] vetor = new int[n];
-    
     vetor[0] = 1;
     vetor[1] = 1;
     for(i = 2; i < n; i++){
