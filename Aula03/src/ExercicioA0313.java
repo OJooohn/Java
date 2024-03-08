@@ -23,7 +23,6 @@ public class ExercicioA0313 {
       System.out.print("[" + vetor[i] + "] ");
     }
 
-
   }
 
 }

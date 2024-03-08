@@ -13,8 +13,8 @@ public class ExercicioA0304 {
     var = input.nextInt();
 
     for(i = 0; i < vetor.length; i++){
-      System.out.print("Digite o vlaor do indice [" + (i + 1) + "]: ");
-      vetor[i] = input.nextInt();
+      System.out.print("Digite o valor do indice [" + (i + 1) + "]: ");
+      vetor[i] = Integer.parseInt(input.nextLine());
     }
 
     for(i = 0; i < vetor.length; i++){
