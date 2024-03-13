@@ -6,6 +6,13 @@ public class Aluno {
     float nota1, nota2, notaFinal;
     boolean aprovado;
 
+    Aluno(String mat, String nm, float n1, float n2){
+      matricula = mat;
+      nome = nm;
+      nota1 = n1;
+      nota2 = n2;
+    }
+
    void calcularMedia(boolean mostrar){
     notaFinal = (nota1 + nota2) / 2;
 
