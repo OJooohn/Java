@@ -8,13 +8,34 @@ public class Main {
     Scanner input = new Scanner(System.in);
 
     List<Aluno> turma = new ArrayList<Aluno>();
-    Aluno aluno1 = new Aluno("AL01", "José", 9.7f, 3.2f);
-    Aluno aluno2 = new Aluno("AL02", "Maria", 3.7f, 7.89f);
 
-    aluno1.calcularMedia(false);
-    aluno2.calcularMedia(true);
-    
-    turma.add(aluno1);
+    String matricula, nome;
+    float nota1, nota2;
+    int i;
+
+    Aluno[] alunos = new Aluno[5];
+
+    for(i = 0; i < 5; i++) {
+      System.out.println("Cadastro Aluno " + (i + 1));
+      System.out.print("Informe a matrícula: ");
+      matricula = input.nextLine();
+
+      System.out.print("Informe seu nome: ");
+      nome = input.nextLine();
+
+      System.out.print("Informe a nota1: ");
+      nota1 = Float.parseFloat(input.nextLine());
+      
+      System.out.print("Informe a nota2: ");
+      nota2 = Float.parseFloat(input.nextLine());
+
+      alunos[i].CadastroAluno(matricula, nome, nota1, nota2);
+
+    }
+
+    for(i = 0; i < 5; i++){
+      alunos[i].calcularMedia(true);
+    }
 
   }
 }
