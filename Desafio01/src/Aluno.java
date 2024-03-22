@@ -6,8 +6,8 @@ public class Aluno {
     float nota1, nota2, notaFinal;
     boolean aprovado;
 
-    Aluno(String mat, String nm, float n1, float n2){
-      matricula = mat;
+    void CadastroAluno(String mtr, String nm, float n1, float n2){
+      matricula = mtr;
       nome = nm;
       nota1 = n1;
       nota2 = n2;

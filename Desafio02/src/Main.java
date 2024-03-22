@@ -22,7 +22,7 @@ public class Main {
 
     return nota;
   }
-  
+
   public static void main(String[] args) {
     
     Scanner input = new Scanner(System.in);
