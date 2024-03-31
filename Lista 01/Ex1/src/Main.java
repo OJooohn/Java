@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-
 public class Main {
 
   static float verificarNumero(String texto, Scanner input){
