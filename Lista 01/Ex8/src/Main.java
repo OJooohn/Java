@@ -189,20 +189,20 @@ public class Main {
         break;
         
         case "2":
-        System.out.print(">> Cancelar Pedido");
         System.out.print("\033c");
+        System.out.print(">> Cancelar Pedido");
         CancelarPedido(input, pedidos);
         break;
         
         case "3":
-        System.out.print(">> Listar Pedidos");
         System.out.print("\033c");
+        System.out.print(">> Listar Pedidos");
         LisarPedidos(input, pedidos);
         break;
         
         case "4":
-        System.out.print(">> Adicionar Sabor");
         System.out.print("\033c");
+        System.out.print(">> Adicionar Sabor");
         AdicionarSabor(input, pizzas);
         break;
         
