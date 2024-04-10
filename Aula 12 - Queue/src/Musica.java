@@ -37,7 +37,13 @@ public class Musica implements Comparable<Musica>{
   public int compareTo(Musica o) {
     // TODO Auto-generated method stub
     // throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
-    return titulo.compareTo(o.getTitulo());
+    // return titulo.compareTo(o.getTitulo());
+    int compare = Integer.compare(ano, o.getAno());
+
+    if(compare != 0) 
+      return compare;
+    
+      return 0;
   }
 
 }

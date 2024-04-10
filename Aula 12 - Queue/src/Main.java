@@ -30,6 +30,9 @@ public class Main {
         // System.out.print("]");
         // Collections.sort(musicas);
         // System.out.println(musicas);
+
+        Collections.sort(musicas);
+        System.out.println(musicas);
         
     }
 }
