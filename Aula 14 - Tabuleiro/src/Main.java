@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -17,8 +18,9 @@ public class Main {
     
     Scanner input = new Scanner(System.in);
     Random rn = new Random();
-    int posX, posY;
-    boolean setPers = false;
+
+    int posX, posY, quantInimigos = 0, dificuldade = 0;
+    boolean setPers = false, menu = true;
     
     System.out.print(">> Digite a quantidade de linhas: ");
     int linhas = Integer.parseInt(input.nextLine());
@@ -35,22 +37,62 @@ public class Main {
     posY = rn.nextInt(colunas);
     tabulerio.setPersonagem(posX, posY);
 
-    // Primeiro inimigo
-    setPers = false;
-    while(!setPers){
-      posX = rn.nextInt(linhas);
-      posY = rn.nextInt(colunas);
-      //System.out.println("Rand = " + posX + " | " + posY + " | " + tabulerio.getMatriz(posX, posY));
-      if(tabulerio.getMatriz(posX, posY) == '.'){
-        setPers = true;
-        tabulerio.setInimigos(posX, posY);
+    while(dificuldade < 1){
+      System.out.println("\033c");
+      System.out.println("| Selecione a dificuldade: ");
+      System.out.println("| [1] Muito fácil");
+      System.out.println("| [2] Fácil");
+      System.out.println("| [3] Médio");
+      System.out.println("| [4] Difícil");
+      System.out.println("| [5] Muito Difícil");
+      System.out.println("| [6] " + RED + "HARDCORE" + WHITE);
+      System.out.print("| >> Selecione a dificuldade: ");
+      dificuldade = Integer.parseInt(input.nextLine());
+
+      switch(dificuldade){
+        case 1: quantInimigos = 1;
+        break;
+
+        case 2: quantInimigos = 2;
+        break;
+
+        case 3: quantInimigos = 4;
+        break;
+
+        case 4: quantInimigos = 6;
+        break;
+
+        case 5: quantInimigos = 7;
+        break;
+
+        case 6: quantInimigos = 10;
+        break;
+
+        default:
+          System.out.println("| >> Opcao inválida! Digite novamente...\n\n");
+          System.out.println(">> Aperta qualquer tecla para continuar...");
+          input.nextLine();
         break;
       }
-      
     }
+
+    for(int i = 0; i < quantInimigos; i++){
+      setPers = false;
+      while(!setPers){
+        posX = rn.nextInt(linhas);
+        posY = rn.nextInt(colunas);
+        //System.out.println("Rand = " + posX + " | " + posY + " | " + tabulerio.getMatriz(posX, posY));
+        if(tabulerio.getMatriz(posX, posY) == '.'){
+          setPers = true;
+          tabulerio.setInimigos(posX, posY);
+          break;
+        }
+      }
+    }
+    tabulerio.imprimirTabuleiro();
     
     // Segundo inimigo
-    setPers = false;
+    /*setPers = false;
     while(!setPers){
       posX = rn.nextInt(linhas);
       posY = rn.nextInt(colunas);
@@ -60,12 +102,9 @@ public class Main {
         tabulerio.setInimigos(posX, posY);
         break;
       }
-      
-    }
-    tabulerio.imprimirTabuleiro();
+    }*/
 
     String opcao = "0";
-    boolean menu = true;
     int personagem, jogo;
 
     while(menu){
@@ -98,24 +137,49 @@ public class Main {
 
       System.out.println("\033c");
       System.out.println("| Selecione o personagem: ");
-      System.out.println("| Legenda: [linha][coluna]");
+
+      System.out.println("| (0) - " + RED + "Terminar jogo!" + WHITE);
       tabulerio.imprimirPersonagens();
       imprimirSeparador(tabulerio);
       tabulerio.imprimirTabuleiro();
       imprimirSeparador(tabulerio);
+
       System.out.println("| Selecione o movimento: ");
       System.out.println("| [W] Subir");
       System.out.println("| [A] Esquerda");
       System.out.println("| [S] Descer");
       System.out.println("| [D] Direita");
       System.out.println("| [5] Sair");
-      System.out.print(">> Selecione o personagem: ");
+      System.out.print("| >> Selecione o personagem: ");
       personagem = Integer.parseInt(input.nextLine()) - 1;
-      System.out.print(">> Selecione o movimento: ");
-      opcao = input.nextLine();
-      opcao = opcao.toUpperCase();
+
+      if(personagem == -1){
+        System.out.println("\033c");
+        imprimirSeparador(tabulerio);
+        tabulerio.imprimirTabuleiro();
+        imprimirSeparador(tabulerio);
+        System.out.println("|");
+        System.out.println("| Voce " + RED + "perdeu " + WHITE + "o jogo por desistencia...");
+        System.out.println("|");
+        imprimirSeparador(tabulerio);
+        break;
+      }
+
+      if(personagem < 0 || personagem >= tabulerio.getPersSize()){
+        System.out.println("| >> Personagem inexistente! Digite novamente...\n\n");
+        System.out.println(">> Aperta qualquer tecla para continuar...");
+        input.nextLine();
+        opcao = "0";
+      } else {
+        System.out.print("| >> Selecione o movimento: ");
+        opcao = input.nextLine();
+        opcao = opcao.toUpperCase();
+      }
 
       switch(opcao){
+
+        case "0":
+        break;
         
         case "W":
           tabulerio.moverPersonagem(1, personagem, input);
@@ -140,7 +204,7 @@ public class Main {
 
         default:
           System.out.println(">> Opcao inválida! Digite novamente...\n\n");
-          System.out.println(">> Aperta qualquer tecla...");
+          System.out.println(">> Aperta qualquer tecla para continuar...");
           input.nextLine();
         break;
         
