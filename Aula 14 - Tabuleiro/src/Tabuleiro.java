@@ -1,5 +1,3 @@
-import java.sql.Array;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -105,7 +103,7 @@ public class Tabuleiro{
 
   void moverPersonagem(int mov, int personagem, Scanner input){
     Personagem p = personagens.get(personagem);
-    int i, posX, posY;
+    int i;
 
     char icone;
     if(personagens.get(personagem).getIcone() == 'X')
