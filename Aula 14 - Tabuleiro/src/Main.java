@@ -2,14 +2,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-
-  static int Rand(int min, int max){
-    return min + (int)(Math.random() * ((max - min) + 1));
-  }
-
   public static void main(String[] args) {
     
     Scanner input = new Scanner(System.in);
+    Random rn = new Random();
+    int posX, posY;
+    boolean setPers = false;
     
     System.out.print(">> Digite a quantidade de linhas: ");
     int linhas = Integer.parseInt(input.nextLine());
@@ -20,59 +18,82 @@ public class Main {
     Tabuleiro tabulerio = new Tabuleiro(linhas, colunas);
     
     tabulerio.novoTabulero();
+
+    // Aliado
+    posX = rn.nextInt(linhas);
+    posY = rn.nextInt(colunas);
+    tabulerio.setPersonagem(posX, posY);
+
+    // Primeiro inimigo
+    setPers = false;
+    while(!setPers){
+      posX = rn.nextInt(linhas);
+      posY = rn.nextInt(colunas);
+      //System.out.println("Rand = " + posX + " | " + posY + " | " + tabulerio.getMatriz(posX, posY));
+      if(tabulerio.getMatriz(posX, posY) == '.'){
+        setPers = true;
+        tabulerio.setInimigos(posX, posY);
+        break;
+      }
+      
+    }
+    
+    // Segundo inimigo
+    setPers = false;
+    while(!setPers){
+      posX = rn.nextInt(linhas);
+      posY = rn.nextInt(colunas);
+      //System.out.println("Rand2 = " + posX + " | " + posY + " | " + tabulerio.getMatriz(posX, posY));
+      if(tabulerio.getMatriz(posX, posY) == '.'){
+        setPers = true;
+        tabulerio.setInimigos(posX, posY);
+        break;
+      }
+      
+    }
     tabulerio.imprimirTabuleiro();
 
-    System.out.print(">> Digite a linha inicial do personagem: ");
-    int x = Integer.parseInt(input.nextLine()) - 1;
-
-    System.out.print(">> Digite a coluna inicial do personagem: ");
-    int y = Integer.parseInt(input.nextLine()) - 1;
-
-    tabulerio.setPersonagem(x, y);
-    tabulerio.imprimirTabuleiro();
-
-    int posX, posY;
-    
-    posX = Rand(0, linhas);
-    posY = Rand(0, colunas);
-    tabulerio.setInimigos(posX, posY);
-    posX = Rand(0, linhas);
-    posY = Rand(0, colunas);
-    tabulerio.setInimigos(posX, posY);
-    
     String opcao = "0";
     boolean menu = true;
+    int personagem;
 
     while(menu){
 
       System.out.println("\033c");
+      System.out.println("| Selecione o personagem: ");
+      System.out.println("| Legenda: [linha][coluna]");
+      tabulerio.imprimirPersonagens();
+      System.out.println("---------------------------------");
       tabulerio.imprimirTabuleiro();
-      System.out.println("----------------------------");
-      System.out.println("[W] Subir");
-      System.out.println("[S] Descer");
-      System.out.println("[A] Esquerda");
-      System.out.println("[D] Direita");
-      System.out.println("[5] Sair");
-      System.out.print(">> Opcao: ");
+      System.out.println("---------------------------------");
+      System.out.println("| Selecione o movimento: ");
+      System.out.println("| [W] Subir");
+      System.out.println("| [A] Esquerda");
+      System.out.println("| [S] Descer");
+      System.out.println("| [D] Direita");
+      System.out.println("| [5] Sair");
+      System.out.print(">> Selecione o personagem: ");
+      personagem = Integer.parseInt(input.nextLine()) - 1;
+      System.out.print(">> Selecione o movimento: ");
       opcao = input.nextLine();
       opcao = opcao.toUpperCase();
 
       switch(opcao){
         
         case "W":
-          tabulerio.moverPersonagem(1);
+          tabulerio.moverPersonagem(1, personagem, input);
         break;
           
         case "S":
-          tabulerio.moverPersonagem(2);
+          tabulerio.moverPersonagem(2, personagem, input);
         break;
           
         case "A":
-          tabulerio.moverPersonagem(3);
+          tabulerio.moverPersonagem(3, personagem, input);
         break;
           
         case "D":
-          tabulerio.moverPersonagem(4);
+          tabulerio.moverPersonagem(4, personagem, input);
         break;
 
         case "5":

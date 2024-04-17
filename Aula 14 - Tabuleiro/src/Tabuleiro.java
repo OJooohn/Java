@@ -37,6 +37,10 @@ public class Tabuleiro{
     return this.colunas;
   }
 
+  char getMatriz(int x, int y){
+    return this.matriz[x][y];
+  }
+
   void novoTabulero(){
     this.matriz = new char[this.linhas][this.colunas];
     for(int i = 0; i < this.linhas; i++){
@@ -47,7 +51,15 @@ public class Tabuleiro{
   }
 
   void imprimirTabuleiro(){
-    for(int i = 0; i < this.linhas; i++){
+    int i;
+    System.out.print("|      ");
+    for(i = 0; i < this.colunas; i++){
+      System.out.print("[ " + (i + 1) + " ]");
+    }
+    System.out.println(" |");
+    for(i = 0; i < this.linhas; i++){
+      System.out.print("| ");
+      System.out.print("[ " + (i + 1) + " ]");
       for(int j = 0; j < this.colunas; j++){
         System.out.print("[ ");
         if(matriz[i][j] == 'O'){
@@ -60,38 +72,81 @@ public class Tabuleiro{
          
         System.out.print(WHITE + " ]");
       }
-      System.out.println();
+    System.out.println(" |");
+    }
+  }
+  
+
+  void imprimirPersonagens(){
+    for(int i = 0; i < personagens.size(); i++){
+      Personagem p = personagens.get(i);
+      if(personagens.get(i).getIcone() == 'O')
+        System.out.println("| (" + (i + 1) + ") - [ " + YELLOW + p.getIcone() + WHITE + " ] - Aliado  - Posicao [" + (p.getX() + 1) + "][" + (p.getY() + 1) + "]");
+      else
+        System.out.println("| (" + (i + 1) + ") - [ " + RED + p.getIcone() + WHITE + " ] - Inimigo - Posicao [" + (p.getX() + 1) + "][" + (p.getY() + 1) + "]");
     }
   }
 
-  /*void imprimirPersonagens(){
-    for(int i = 0; i < personagens.size(); i++){
-      System.out.println("| (" + );
-    }
-  }*/
+  void moverPersonagem(int mov, int personagem, Scanner input){
+    Personagem p = personagens.get(personagem);
 
-  void moverPersonagem(int mov){
-    Personagem p = personagens.get(0);
-    matriz[p.getX()][p.getY()] = '.';
+    char icone;
+    if(personagens.get(personagem).getIcone() == 'X')
+      icone = 'X';
+    else
+      icone = 'O';
+
     switch(mov){
       case 1:
+      if(p.getX() == 0){
+        System.out.println(">> Fora dos limites");
+        System.out.println(">> Aperte qualquer tecla para continuar...");
+        input.nextLine();
+        break;
+      } else {
+        matriz[p.getX()][p.getY()] = '.';
         p.setX(p.getX() - 1);
-        matriz[p.getX()][p.getY()] = 'O';
+        matriz[p.getX()][p.getY()] = icone;
+      }
       break;
 
       case 2:
+      if(p.getX() == this.linhas - 1){
+        System.out.println(">> Fora dos limites");
+        System.out.println(">> Aperte qualquer tecla para continuar...");
+        input.nextLine();
+        break;
+      } else {
+        matriz[p.getX()][p.getY()] = '.';
         p.setX(p.getX() + 1);
-        matriz[p.getX()][p.getY()] = 'O';
+        matriz[p.getX()][p.getY()] = icone;
+      }
       break;
 
       case 3:
+      if(p.getY() == 0){
+        System.out.println(">> Fora dos limites");
+        System.out.println(">> Aperte qualquer tecla para continuar...");
+        input.nextLine();
+        break;
+      } else {
+        matriz[p.getX()][p.getY()] = '.';
         p.setY(p.getY() - 1);
-        matriz[p.getX()][p.getY()] = 'O';
+        matriz[p.getX()][p.getY()] = icone;
+      }
       break;
 
       case 4:
+      if(p.getY() == this.colunas - 1){
+        System.out.println(">> Fora dos limites");
+        System.out.println(">> Aperte qualquer tecla para continuar...");
+        input.nextLine();
+        break;
+      } else {
+        matriz[p.getX()][p.getY()] = '.';
         p.setY(p.getY() + 1);
-        matriz[p.getX()][p.getY()] = 'O';
+        matriz[p.getX()][p.getY()] = icone;
+      }
       break;
     }
   }

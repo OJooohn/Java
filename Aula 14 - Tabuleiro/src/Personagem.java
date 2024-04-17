@@ -2,10 +2,12 @@ public class Personagem{
 
   private int posX;
   private int posY;
+  private char icone;
 
-  Personagem(int posX, int posY){
+  Personagem(int posX, int posY, char icone){
     this.posX = posX;
     this.posY = posY;
+    this.icone = icone;
   }
 
   void setX(int x){
@@ -22,6 +24,10 @@ public class Personagem{
 
   int getY(){
     return this.posY;
+  }
+
+  char getIcone(){
+    return this.icone;
   }
 
 }
