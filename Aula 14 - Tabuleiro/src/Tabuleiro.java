@@ -1,4 +1,5 @@
 import java.sql.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -39,6 +40,21 @@ public class Tabuleiro{
 
   char getMatriz(int x, int y){
     return this.matriz[x][y];
+  }
+
+  int getPersSize(){
+    return this.personagens.size();
+  }
+
+  int statusJogo(){
+    if(personagens.get(0).getIcone() == 'X'){
+      return 2;
+    }
+    if(personagens.get(0).getIcone() == 'O' && personagens.size() == 1){
+      return 1;
+    } else {
+      return 0;
+    }
   }
 
   void novoTabulero(){
@@ -104,6 +120,12 @@ public class Tabuleiro{
         input.nextLine();
         break;
       } else {
+        if(icone == 'O' && getMatriz(p.getX() - 1, p.getY()) == 'X'){
+          personagens.remove(personagens.size() - 1);
+        }
+        if(icone == 'X' && getMatriz(p.getX() - 1, p.getY()) == 'O'){
+          personagens.remove(0);
+        }
         matriz[p.getX()][p.getY()] = '.';
         p.setX(p.getX() - 1);
         matriz[p.getX()][p.getY()] = icone;
@@ -117,6 +139,12 @@ public class Tabuleiro{
         input.nextLine();
         break;
       } else {
+        if(icone == 'O' && getMatriz(p.getX() + 1, p.getY()) == 'X'){
+          personagens.remove(personagens.size() - 1);
+        }
+        if(icone == 'X' && getMatriz(p.getX() + 1, p.getY()) == 'O'){
+          personagens.remove(0);
+        }
         matriz[p.getX()][p.getY()] = '.';
         p.setX(p.getX() + 1);
         matriz[p.getX()][p.getY()] = icone;
@@ -130,6 +158,12 @@ public class Tabuleiro{
         input.nextLine();
         break;
       } else {
+        if(icone == 'O' && getMatriz(p.getX(), p.getY() - 1) == 'X'){
+          personagens.remove(personagens.size() - 1);
+        }
+        if(icone == 'X' && getMatriz(p.getX(), p.getY() - 1) == 'O'){
+          personagens.remove(0);
+        }
         matriz[p.getX()][p.getY()] = '.';
         p.setY(p.getY() - 1);
         matriz[p.getX()][p.getY()] = icone;
@@ -143,6 +177,12 @@ public class Tabuleiro{
         input.nextLine();
         break;
       } else {
+        if(icone == 'O' && getMatriz(p.getX(), p.getY() + 1) == 'X'){
+          personagens.remove(personagens.size() - 1);
+        }
+        if(icone == 'X' && getMatriz(p.getX(), p.getY() + 1) == 'O'){
+          personagens.remove(0);
+        }
         matriz[p.getX()][p.getY()] = '.';
         p.setY(p.getY() + 1);
         matriz[p.getX()][p.getY()] = icone;

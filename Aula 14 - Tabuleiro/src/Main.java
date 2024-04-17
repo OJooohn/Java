@@ -2,6 +2,17 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+
+  public static final String RED = "\033[0;31m";
+  public static final String GREEN = "\033[0;32m";
+  public static final String WHITE = "\033[0;37m";
+
+  static void imprimirSeparador(Tabuleiro tabuleiro){
+    for(int i = 0; i <= tabuleiro.getColuna(); i++){
+      System.out.print("-----");
+    }
+    System.out.println("----");
+  }
   public static void main(String[] args) {
     
     Scanner input = new Scanner(System.in);
@@ -55,17 +66,43 @@ public class Main {
 
     String opcao = "0";
     boolean menu = true;
-    int personagem;
+    int personagem, jogo;
 
     while(menu){
+
+      jogo = tabulerio.statusJogo();
+
+      if(jogo == 2){
+        System.out.println("\033c");
+        imprimirSeparador(tabulerio);
+        tabulerio.imprimirTabuleiro();
+        imprimirSeparador(tabulerio);
+        System.out.println("|");
+        System.out.println("| Voce " + RED + "perdeu " + WHITE + "o jogo!");
+        System.out.println("|");
+        imprimirSeparador(tabulerio);
+        break;
+      }
+      
+      if(jogo == 1){
+        System.out.println("\033c");
+        imprimirSeparador(tabulerio);
+        tabulerio.imprimirTabuleiro();
+        imprimirSeparador(tabulerio);
+        System.out.println("|");
+        System.out.println("| Voce " + GREEN + "ganhou " + WHITE + "o jogo!");
+        System.out.println("|");
+        imprimirSeparador(tabulerio);
+        break;
+      }
 
       System.out.println("\033c");
       System.out.println("| Selecione o personagem: ");
       System.out.println("| Legenda: [linha][coluna]");
       tabulerio.imprimirPersonagens();
-      System.out.println("---------------------------------");
+      imprimirSeparador(tabulerio);
       tabulerio.imprimirTabuleiro();
-      System.out.println("---------------------------------");
+      imprimirSeparador(tabulerio);
       System.out.println("| Selecione o movimento: ");
       System.out.println("| [W] Subir");
       System.out.println("| [A] Esquerda");
