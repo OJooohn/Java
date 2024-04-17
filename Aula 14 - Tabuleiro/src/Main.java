@@ -142,6 +142,7 @@ public class Main {
           System.out.println(">> Opcao inválida! Digite novamente...\n\n");
           System.out.println(">> Aperta qualquer tecla...");
           input.nextLine();
+        break;
         
       }
 

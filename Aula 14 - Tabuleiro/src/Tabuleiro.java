@@ -105,6 +105,7 @@ public class Tabuleiro{
 
   void moverPersonagem(int mov, int personagem, Scanner input){
     Personagem p = personagens.get(personagem);
+    int i, posX, posY;
 
     char icone;
     if(personagens.get(personagem).getIcone() == 'X')
@@ -121,7 +122,12 @@ public class Tabuleiro{
         break;
       } else {
         if(icone == 'O' && getMatriz(p.getX() - 1, p.getY()) == 'X'){
-          personagens.remove(personagens.size() - 1);
+          for(i = 0; i < personagens.size(); i++){
+            if(personagens.get(i).getX() == p.getX() - 1 && personagens.get(i).getY() == p.getY()){
+              personagens.remove(i);
+              break;
+            }
+          }
         }
         if(icone == 'X' && getMatriz(p.getX() - 1, p.getY()) == 'O'){
           personagens.remove(0);
@@ -140,7 +146,12 @@ public class Tabuleiro{
         break;
       } else {
         if(icone == 'O' && getMatriz(p.getX() + 1, p.getY()) == 'X'){
-          personagens.remove(personagens.size() - 1);
+          for(i = 0; i < personagens.size(); i++){
+            if(personagens.get(i).getX() == p.getX() + 1 && personagens.get(i).getY() == p.getY()){
+              personagens.remove(i);
+              break;
+            }
+          }
         }
         if(icone == 'X' && getMatriz(p.getX() + 1, p.getY()) == 'O'){
           personagens.remove(0);
@@ -159,7 +170,12 @@ public class Tabuleiro{
         break;
       } else {
         if(icone == 'O' && getMatriz(p.getX(), p.getY() - 1) == 'X'){
-          personagens.remove(personagens.size() - 1);
+          for(i = 0; i < personagens.size(); i++){
+            if(personagens.get(i).getY() == p.getY() - 1 && personagens.get(i).getX() == p.getX()){
+              personagens.remove(i);
+              break;
+            }
+          }
         }
         if(icone == 'X' && getMatriz(p.getX(), p.getY() - 1) == 'O'){
           personagens.remove(0);
@@ -178,7 +194,12 @@ public class Tabuleiro{
         break;
       } else {
         if(icone == 'O' && getMatriz(p.getX(), p.getY() + 1) == 'X'){
-          personagens.remove(personagens.size() - 1);
+          for(i = 0; i < personagens.size(); i++){
+            if(personagens.get(i).getY() == p.getY() + 1 && personagens.get(i).getX() == p.getX()){
+              personagens.remove(i);
+              break;
+            }
+          }
         }
         if(icone == 'X' && getMatriz(p.getX(), p.getY() + 1) == 'O'){
           personagens.remove(0);
