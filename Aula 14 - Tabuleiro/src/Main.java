@@ -134,6 +134,7 @@ public class Main {
         break;
       }
 
+      // Adicionar um sistema de turnos, cada jogador por vez
       System.out.println("\033c");
       System.out.println("| Selecione o personagem: ");
 
