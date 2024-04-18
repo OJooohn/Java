@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Tabuleiro{
@@ -8,7 +9,7 @@ public class Tabuleiro{
   public static final String WHITE = "\033[0;37m";
   public static final String RED = "\033[0;31m";
   public static final String BLUE = "\033[0;34m";
-    public static final String PURPLE = "\033[0;35m";
+  public static final String PURPLE = "\033[0;35m";
   
   private int linhas;
   private int colunas;
@@ -71,14 +72,20 @@ public class Tabuleiro{
 
     System.out.print("|      ");
     for(i = 0; i < this.colunas; i++){
-      System.out.print("[ " + PURPLE + (i + 1) + WHITE + " ]");
+      System.out.print("[" + PURPLE);
+      System.out.printf("%2d", i + 1);
+      System.out.print(WHITE + " ]");
+      //System.out.print("[" + PURPLE + deci.format(i + 1) + WHITE + " ]");
     }
     System.out.println(" |");
 
     for(i = 0; i < this.linhas; i++){
 
       System.out.print("| ");
-      System.out.print("[ " + BLUE + (i + 1) + WHITE + " ]");
+      System.out.print("[" + BLUE);
+      System.out.printf("%2d", i + 1);
+      System.out.print(WHITE + " ]");
+      //System.out.print("[ " + BLUE + (i + 1) + WHITE + " ]");
 
       for(int j = 0; j < this.colunas; j++){
         System.out.print("[ ");
@@ -102,7 +109,7 @@ public class Tabuleiro{
     for(int i = 0; i < personagens.size(); i++){
       Personagem p = personagens.get(i);
       if(personagens.get(i).getIcone() == 'O')
-        System.out.println("| (" +  (i + 1) + ") - [ " + YELLOW + p.getIcone() + WHITE + " ] - Aliado  - Posicao [" + BLUE + (p.getX() + 1) + WHITE + "][" + PURPLE + (p.getY() + 1) + WHITE + "]");
+        System.out.println("| (" +  (i + 1) + ") - [ " + YELLOW + p.getIcone() + WHITE + " ] - Aliado   - Posicao [" + BLUE + (p.getX() + 1) + WHITE + "][" + PURPLE + (p.getY() + 1) + WHITE + "]");
         else
         System.out.println("| (" + (i + 1) + ") - [ " + RED + p.getIcone() + WHITE + " ] - Inimigo  - Posicao [" + BLUE + (p.getX() + 1) + WHITE + "][" + PURPLE + (p.getY() + 1) + WHITE + "]");
     }
@@ -122,7 +129,7 @@ public class Tabuleiro{
       case 1:
       if(p.getX() == 0){
         System.out.println(">> Fora dos limites");
-        System.out.println(">> Aperte qualquer tecla para continuar...");
+        System.out.println(">> Pressione qualquer tecla para continuar...");
         input.nextLine();
         break;
       } else {
@@ -229,4 +236,84 @@ public class Tabuleiro{
     }
   }
 
+  public void moverInimigos(int personagem){
+    
+    Personagem aliado = personagens.get(0);
+    Personagem inimigo = personagens.get(personagem);
+
+    Random rn = new Random();
+
+    int mover = rn.nextInt(4); // 0, 1, 2, 3 --> sendo mover > 0 --> 75% de chance de se mover
+    int pos; // 0 para X e 1 para Y
+    int dX = aliado.getX() - inimigo.getX(), dY = aliado.getY() - inimigo.getY();
+
+    if(dX < 0)
+      dX = dX * -1;
+
+    if(dY < 0)
+      dY = dY * -1;
+
+    if(dX > dY)
+      pos = 0;
+    else 
+      pos = 1;
+
+    // Y = ROXO | X = AZUL
+
+    if(mover > 0){
+      if(pos == 0){
+        if(inimigo.getX() > aliado.getX()){
+          if(getMatriz(inimigo.getX() - 1, inimigo.getY()) == 'X'){
+             return;
+          } else {
+            if(getMatriz(inimigo.getX() - 1, inimigo.getY()) == 'O'){
+              personagens.remove(0);
+            }
+            this.matriz[inimigo.getX()][inimigo.getY()] = '.';
+            inimigo.setX(inimigo.getX() - 1);
+            this.matriz[inimigo.getX()][inimigo.getY()] = 'X';
+            return;
+          }
+        } else {
+          if(getMatriz(inimigo.getX() + 1, inimigo.getY()) == 'X'){
+            return;
+          } else {
+            if(getMatriz(inimigo.getX() + 1, inimigo.getY()) == 'O'){
+              personagens.remove(0);
+            }
+            this.matriz[inimigo.getX()][inimigo.getY()] = '.';
+            inimigo.setX(inimigo.getX() + 1);
+            this.matriz[inimigo.getX()][inimigo.getY()] = 'X';
+            return;
+          }
+        }
+      } else {
+        if(inimigo.getY() > aliado.getY()){
+          if(getMatriz(inimigo.getX(), inimigo.getY() - 1) == 'X'){
+            return;
+          } else {
+            if(getMatriz(inimigo.getX(), inimigo.getY() - 1) == 'O'){
+              personagens.remove(0);
+            }
+            System.out.println("Y diminuindo");
+            this.matriz[inimigo.getX()][inimigo.getY()] = '.';
+            inimigo.setY(inimigo.getY() - 1);
+            this.matriz[inimigo.getX()][inimigo.getY()] = 'X';
+          }
+        } else {
+          if(getMatriz(inimigo.getX(), inimigo.getY() + 1) == 'X'){
+            return;
+          } else {
+            if(getMatriz(inimigo.getX(), inimigo.getY() + 1) == 'O'){
+              personagens.remove(0);
+            }
+            System.out.println("Y aumentando");
+            this.matriz[inimigo.getX()][inimigo.getY()] = '.';
+            inimigo.setY(inimigo.getY() + 1);
+            this.matriz[inimigo.getX()][inimigo.getY()] = 'X';
+          }
+        }
+      }
+    }
+  }
 }
