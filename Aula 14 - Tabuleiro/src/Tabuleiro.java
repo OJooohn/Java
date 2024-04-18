@@ -104,7 +104,7 @@ public class Tabuleiro{
       if(personagens.get(i).getIcone() == 'O')
         System.out.println("| (" +  (i + 1) + ") - [ " + YELLOW + p.getIcone() + WHITE + " ] - Aliado  - Posicao [" + BLUE + (p.getX() + 1) + WHITE + "][" + PURPLE + (p.getY() + 1) + WHITE + "]");
         else
-        System.out.println("| (" + (i + 1) + ") - [ " + RED + p.getIcone() + WHITE + " ] - Aliado  - Posicao [" + BLUE + (p.getX() + 1) + WHITE + "][" + PURPLE + (p.getY() + 1) + WHITE + "]");
+        System.out.println("| (" + (i + 1) + ") - [ " + RED + p.getIcone() + WHITE + " ] - Inimigo  - Posicao [" + BLUE + (p.getX() + 1) + WHITE + "][" + PURPLE + (p.getY() + 1) + WHITE + "]");
     }
   }
 
