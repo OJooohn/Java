@@ -76,7 +76,7 @@ public class Main {
     Random rn = new Random();
 
     int posX, posY, quantInimigos = 0, dificuldade = 0, rodada = 1;
-    int jogo, i = 0, tamTab = 0, linhas = 0, colunas = 0;
+    int jogo, i = 0, tamTab = 0, linhas = 0, colunas = 0, pointsMult = 0;
     boolean setPers = false, menu = true, dif = false;
     String opcao = "0";
 
@@ -132,6 +132,7 @@ public class Main {
 
       switch(dificuldade){
         case 1:
+        pointsMult = 1;
         if(quantCasas >= 25 && quantCasas <= 35)
           quantInimigos = 2;
           else
@@ -141,6 +142,7 @@ public class Main {
         break;
 
         case 2: 
+        pointsMult = 1;
         if(quantCasas >= 25 && quantCasas <= 35)
           quantInimigos = 4;
           else
@@ -150,6 +152,7 @@ public class Main {
         break;
 
         case 3:
+        pointsMult = 2;
           if(quantCasas >= 25 && quantCasas <= 35)
             quantInimigos = 6;
           else
@@ -159,6 +162,7 @@ public class Main {
         break;
 
         case 4:
+        pointsMult = 4;
           if(quantCasas >= 25 && quantCasas <= 35)
             quantInimigos = 8;
           else
@@ -168,6 +172,7 @@ public class Main {
         break;
 
         case 5:
+        pointsMult = 6;
           if(quantCasas >= 25 && quantCasas <= 35)
             quantInimigos = 10;
           else
@@ -177,6 +182,7 @@ public class Main {
         break;
 
         case 6:
+        pointsMult = 10;
           if(quantCasas >= 25 && quantCasas <= 35)
             quantInimigos = 12;
           else
@@ -220,8 +226,12 @@ public class Main {
         System.out.println("|               TABULEIRO                |");
         imprimirSeparador(tabulerio);
         tabulerio.imprimirTabuleiro();
-        imprimirSeparador(tabulerio);
-        System.out.println("| Voce " + RED + "perdeu " + WHITE + "o jogo!                    |");
+        System.out.println("|----------------------------------------|");
+        System.out.println("|               " + RED_BOLD + "GAME OVER" + RESET + "                |");
+        System.out.println("|----------------------------------------|");
+        System.out.print("| " + WHITE_BOLD + "PONTUAÇÃO: ");
+        System.out.printf("%3d", tabulerio.getPontuacao() * pointsMult);
+        System.out.println(RESET + "                         |");
         System.out.println("|----------------------------------------|");
         break;
       }
@@ -233,8 +243,12 @@ public class Main {
         imprimirSeparador(tabulerio);
         tabulerio.imprimirTabuleiro();
         imprimirSeparador(tabulerio);
-        System.out.println("| Voce " + GREEN + "ganhou " + WHITE + "o jogo!            |");
-        imprimirSeparador(tabulerio);
+        System.out.println("|              " + GREEN_BOLD + "VOCÊ GANHOU" + RESET + "               |");
+        System.out.println("|----------------------------------------|");
+        System.out.print("| " + WHITE_BOLD + "PONTUAÇÃO: ");
+        System.out.printf("%3d", tabulerio.getPontuacao() * pointsMult);
+        System.out.println(RESET + "                         |");
+        System.out.println("|----------------------------------------|");
         break;
       }
 
@@ -256,7 +270,7 @@ public class Main {
       System.out.println("| [" + WHITE_BOLD + "S" + RESET + "] - Descer                           |");
       System.out.println("| [" + WHITE_BOLD + "D" + RESET + "] - Direita                          |");
       System.out.println("| [" + WHITE_BOLD + "5" + RESET + "] - Sair                             |");
-      System.out.print("| >> Opcao: ");
+      System.out.print("| >> Selecione uma opção: ");
       opcao = input.nextLine();
       opcao = opcao.toUpperCase();
 
@@ -274,7 +288,7 @@ public class Main {
             }
             atualizarTela(tabulerio);
             for(i = 1; i < tabulerio.getPersSize(); i++){
-              tabulerio.moverInimigos(i);
+              tabulerio.moverInimigos(i, dificuldade);
             }
           }
         break;
@@ -288,7 +302,7 @@ public class Main {
             }
             atualizarTela(tabulerio);
             for(i = 1; i < tabulerio.getPersSize(); i++){
-              tabulerio.moverInimigos(i);
+              tabulerio.moverInimigos(i, dificuldade);
             }
           }
         break;
@@ -302,7 +316,7 @@ public class Main {
             }
             atualizarTela(tabulerio);
             for(i = 1; i < tabulerio.getPersSize(); i++){
-              tabulerio.moverInimigos(i);
+              tabulerio.moverInimigos(i, dificuldade);
             }
           }
         break;
@@ -316,7 +330,7 @@ public class Main {
             }
             atualizarTela(tabulerio);
             for(i = 1; i < tabulerio.getPersSize(); i++){
-              tabulerio.moverInimigos(i);
+              tabulerio.moverInimigos(i, dificuldade);
             }
           }
         break;
@@ -329,6 +343,7 @@ public class Main {
         break;
 
         default:
+          rodada--;
           System.out.println("|----------------------------------------|");
           System.out.println("| > Opcao inválida! Digite novamente...");
           System.out.println("|----------------------------------------|");
