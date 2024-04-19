@@ -3,9 +3,27 @@ import java.util.Scanner;
 
 public class Main {
 
-  public static final String RED = "\033[0;31m";
-  public static final String GREEN = "\033[0;32m";
-  public static final String WHITE = "\033[0;37m";
+  public static final String RESET = "\033[0m";  // Text Reset
+
+  // Regular Colors
+  public static final String BLACK = "\033[0;30m";   // BLACK
+  public static final String RED = "\033[0;31m";     // RED
+  public static final String GREEN = "\033[0;32m";   // GREEN
+  public static final String YELLOW = "\033[0;33m";  // YELLOW
+  public static final String BLUE = "\033[0;34m";    // BLUE
+  public static final String PURPLE = "\033[0;35m";  // PURPLE
+  public static final String CYAN = "\033[0;36m";    // CYAN
+  public static final String WHITE = "\033[0;37m";   // WHITE
+
+  // Bold
+  public static final String BLACK_BOLD = "\033[1;30m";  // BLACK
+  public static final String RED_BOLD = "\033[1;31m";    // RED
+  public static final String GREEN_BOLD = "\033[1;32m";  // GREEN
+  public static final String YELLOW_BOLD = "\033[1;33m"; // YELLOW
+  public static final String BLUE_BOLD = "\033[1;34m";   // BLUE
+  public static final String PURPLE_BOLD = "\033[1;35m"; // PURPLE
+  public static final String CYAN_BOLD = "\033[1;36m";   // CYAN
+  public static final String WHITE_BOLD = "\033[1;37m";  // WHITE
 
   static void imprimirSeparador(Tabuleiro tabuleiro){
     System.out.print("|");
@@ -57,10 +75,10 @@ public class Main {
     Scanner input = new Scanner(System.in);
     Random rn = new Random();
 
-    int posX, posY, quantInimigos = 0, dificuldade = 0;
+    int posX, posY, quantInimigos = 0, dificuldade = 0, rodada = 1;
+    int jogo, i = 0, tamTab = 0, linhas = 0, colunas = 0;
     boolean setPers = false, menu = true, dif = false;
     String opcao = "0";
-    int jogo, i = 0, tamTab = 0, linhas = 0, colunas = 0;
 
     do{
       System.out.println("\033c");
@@ -110,23 +128,61 @@ public class Main {
       System.out.print("| >> Selecione a dificuldade: ");
       dificuldade = Integer.parseInt(input.nextLine());
 
+      int quantCasas = linhas * colunas;
+
       switch(dificuldade){
-        case 1: quantInimigos = 1; dif = true;
+        case 1:
+        if(quantCasas >= 25 && quantCasas <= 35)
+          quantInimigos = 2;
+          else
+          quantInimigos = 4;
+        
+        dif = true;
         break;
 
-        case 2: quantInimigos = 2; dif = true;
+        case 2: 
+        if(quantCasas >= 25 && quantCasas <= 35)
+          quantInimigos = 4;
+          else
+          quantInimigos = 9;
+
+        dif = true;
         break;
 
-        case 3: quantInimigos = 4; dif = true;
+        case 3:
+          if(quantCasas >= 25 && quantCasas <= 35)
+            quantInimigos = 6;
+          else
+            quantInimigos = 11;
+
+        dif = true;
         break;
 
-        case 4: quantInimigos = 6; dif = true;
+        case 4:
+          if(quantCasas >= 25 && quantCasas <= 35)
+            quantInimigos = 8;
+          else
+            quantInimigos = 13;
+        
+        dif = true;
         break;
 
-        case 5: quantInimigos = 7; dif = true;
+        case 5:
+          if(quantCasas >= 25 && quantCasas <= 35)
+            quantInimigos = 10;
+          else
+            quantInimigos = 15;
+        
+        dif = true;
         break;
 
-        case 6: quantInimigos = 10; dif = true;
+        case 6:
+          if(quantCasas >= 25 && quantCasas <= 35)
+            quantInimigos = 12;
+          else
+            quantInimigos = 17;
+        
+        dif = true;
         break;
 
         default:
@@ -189,14 +245,17 @@ public class Main {
       imprimirSeparador(tabulerio);
       tabulerio.imprimirTabuleiro();
       imprimirSeparador(tabulerio);
-      
+      System.out.print(WHITE_BOLD + "| RODADA: ");
+      System.out.printf("%2d", rodada);
+      System.out.println(RESET + "                             |");
+      System.out.println("|----------------------------------------|");
       System.out.println("|               MOVIMENTOS               |");
       System.out.println("|----------------------------------------|");
-      System.out.println("| [W] - Subir                            |");
-      System.out.println("| [A] - Esquerda                         |");
-      System.out.println("| [S] - Descer                           |");
-      System.out.println("| [D] - Direita                          |");
-      System.out.println("| [5] - Sair                             |");
+      System.out.println("| [" + WHITE_BOLD + "W" + RESET + "] - Subir                            |");
+      System.out.println("| [" + WHITE_BOLD + "A" + RESET + "] - Esquerda                         |");
+      System.out.println("| [" + WHITE_BOLD + "S" + RESET + "] - Descer                           |");
+      System.out.println("| [" + WHITE_BOLD + "D" + RESET + "] - Direita                          |");
+      System.out.println("| [" + WHITE_BOLD + "5" + RESET + "] - Sair                             |");
       System.out.print("| >> Opcao: ");
       opcao = input.nextLine();
       opcao = opcao.toUpperCase();
@@ -208,37 +267,57 @@ public class Main {
         
         case "W":
           tabulerio.moverPersonagem(1, 0, input);
-          atualizarTela(tabulerio);
           // Selecionar automaticamente movimento dos Inimigos, de acordo com a posição do Aliado
-          for(i = 1; i < tabulerio.getPersSize(); i++){
-            tabulerio.moverInimigos(i);
+          if(rodada % 2 == 0){
+            if(tabulerio.getPersSize() == 1){
+              break;
+            }
+            atualizarTela(tabulerio);
+            for(i = 1; i < tabulerio.getPersSize(); i++){
+              tabulerio.moverInimigos(i);
+            }
           }
         break;
           
         case "S":
           tabulerio.moverPersonagem(2, 0, input);
-          atualizarTela(tabulerio);
           // Selecionar automaticamente movimento dos Inimigos, de acordo com a posição do Aliado
-          for(i = 1; i < tabulerio.getPersSize(); i++){
-            tabulerio.moverInimigos(i);
+          if(rodada % 2 == 0){
+            if(tabulerio.getPersSize() == 1){
+              break;
+            }
+            atualizarTela(tabulerio);
+            for(i = 1; i < tabulerio.getPersSize(); i++){
+              tabulerio.moverInimigos(i);
+            }
           }
         break;
           
         case "A":
           tabulerio.moverPersonagem(3, 0, input);
-          atualizarTela(tabulerio);
           // Selecionar automaticamente movimento dos Inimigos, de acordo com a posição do Aliado
-          for(i = 1; i < tabulerio.getPersSize(); i++){
-            tabulerio.moverInimigos(i);
+          if(rodada % 2 == 0){
+            if(tabulerio.getPersSize() == 1){
+              break;
+            }
+            atualizarTela(tabulerio);
+            for(i = 1; i < tabulerio.getPersSize(); i++){
+              tabulerio.moverInimigos(i);
+            }
           }
         break;
           
         case "D":
           tabulerio.moverPersonagem(4, 0, input);
-          atualizarTela(tabulerio);
           // Selecionar automaticamente movimento dos Inimigos, de acordo com a posição do Aliado
-          for(i = 1; i < tabulerio.getPersSize(); i++){
-            tabulerio.moverInimigos(i);
+          if(rodada % 2 == 0){
+            if(tabulerio.getPersSize() == 1){
+              break;
+            }
+            atualizarTela(tabulerio);
+            for(i = 1; i < tabulerio.getPersSize(); i++){
+              tabulerio.moverInimigos(i);
+            }
           }
         break;
 
@@ -258,6 +337,7 @@ public class Main {
         break;
         
       }
+      rodada++;
 
     }
 
