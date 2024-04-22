@@ -12,7 +12,7 @@ public class Main {
     // User input: 00FF24
 
     // Green: FFFFFF both
-    // Black: 000000 both
+    // Black: 656565 FFFFFF
 
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset
@@ -91,6 +91,27 @@ public class Main {
         System.out.println("--------------------------------------------------------------");
     }
 
+    public static boolean verificarPosicao(List<Personagem> personagens, int linha, int coluna){
+        boolean verificado = false;
+        for(int j = 0; j < personagens.size(); j++){
+            Personagem p = personagens.get(j);
+            if(p.getposX() == linha && p.getposY() == coluna){
+                verificado = false;
+                break;
+            } else {
+                verificado = true;
+            }
+        }
+
+        if(!verificado){
+            System.out.println("--------------------------------------------------------------");
+            System.out.println("- DUAS PEÇAS NÃO PODEM FICAR NA MESMA POSIÇÃO!               -");
+            System.out.println("--------------------------------------------------------------");
+        }
+
+        return verificado;
+    }
+
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);
@@ -123,7 +144,6 @@ public class Main {
         // Bispos
         personagens.add(new Personagem("♗", 7, 2));
         personagens.add(new Personagem("♗", 7, 5));
-
         // Rainha
         personagens.add(new Personagem("♕", 7, 3));
         
@@ -159,9 +179,10 @@ public class Main {
 
             int pecas = rodada % 2;
             int linha, coluna;
-            char caracterLinha, caracterColuna;
+            char caracterLinha, caracterColuna, icone;
             String pecaSelecionada, proximaPosicao;
             String[] cortado;
+            boolean verificado = false, colisao = false;
 
             imprimirTabuleiro(personagens, inimigos);
             if(!personagens.get(0).getIcone().equals("♔")){
@@ -192,7 +213,7 @@ public class Main {
                     }
                     
                     // Se o tamanho da string for diferente de 2
-                    // !Character.isLetter(pecaSelecionada.charAt(0)) --> Se o primeiro caracter não é uma letra entra pro input inválido
+                    // !Character.isLetter(pecaSelecionada.charAt(0)) --> Se o primeiro caracter não é uma letra entra pro input Ginválido
                     // !Character.isDigit(pecaSelecionada.charAt(1)) --> Se o segundo caracter não é um número entra pro input inválido
                     if (pecaSelecionada.length() != 2 || !Character.isLetter(pecaSelecionada.charAt(0)) || !Character.isDigit(pecaSelecionada.charAt(1))) {
                         System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
@@ -230,14 +251,15 @@ public class Main {
                             // Limitar movimentos das peças e verificar colisões ao movimentar !! PARTE MAIS DIFÍCIL DO DESAFIO !!
                             // String iconePeca = personagens.get(i).getIcone();
                             
-                            System.out.println("--------------------------------------------------------------");
-                            System.out.print("- SELECIONE A PROXIMA POSIÇÃO DA PEÇA (A1 - H8): ");
-                            proximaPosicao = input.nextLine();
+                            while(!verificado){
+                                System.out.println("--------------------------------------------------------------");
+                                System.out.print("- SELECIONE A PROXIMA POSIÇÃO DA PEÇA (A1 - H8): ");
+                                proximaPosicao = input.nextLine();
 
-                            if (!Character.isLetter(pecaSelecionada.charAt(0)) || !Character.isDigit(pecaSelecionada.charAt(1))) {
-                                System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
-                            } else {
-
+                                if (!Character.isLetter(pecaSelecionada.charAt(0)) || !Character.isDigit(pecaSelecionada.charAt(1))) {
+                                    System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
+                                }
+                                
                                 cortado = proximaPosicao.split("(?=\\d)");
                                 caracterLinha = cortado[0].charAt(0);
                                 linha = caracterLinha - 65;
@@ -254,21 +276,97 @@ public class Main {
                                     System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
                                     break;
                                 }
+
+                                icone = personagens.get(i).getIcone().charAt(0);
+                                        
+                                // BRANCAS: ♔ ♙ ♖ ♘ ♗ ♕
+                                // PRETAS: ♚ ♟ ♜ ♞ ♝ ♛
                                 
-                                for(j = 0; j < inimigos.size(); j++){
-                                    Inimigo I = inimigos.get(j);
-                                    if(I.getposX() == linha && I.getposY() == coluna){
-                                        inimigos.remove(j);
+                                Personagem p = personagens.get(i);
+                                switch(icone){
+                                    case '♔':
+                                    if((p.getposX() - linha) > 1 || (p.getposX() - linha) < -1 || (p.getposY() - coluna) > 1 || (p.getposY() - coluna) < -1){
                                         break;
+                                    } else {
+                                        verificado = true;
+                                        colisao = verificarPosicao(personagens, linha, coluna);
                                     }
+                                    break;
+            
+                                    case '♙':
+                                        boolean diagonal = false;
+
+                                        for(j = 0; j < inimigos.size(); j++){
+                                            Inimigo I = inimigos.get(j);
+                                            if(I.getposX() + 1 == p.getposX() && I.getposY() - 1 == p.getposY()){
+                                                diagonal = true;
+                                                break;
+                                            }
+                                            if(I.getposX() + 1 == p.getposX() && I.getposY() - 1 == p.getposY()){
+                                                diagonal = true;
+                                                break;
+                                            }
+                                        }
+                                        if(diagonal){
+                                            System.out.println("teste");
+                                        }
+
+                                        if(p.getposX() == 6){
+                                            if(p.getposX() - linha > 2){
+                                                if(p.getposY() == coluna){
+                                                    verificado = true;
+                                                }
+                                                break;
+                                            } else {
+                                                verificado = true;
+                                            }
+                                        } else {
+                                            if(p.getposX() < linha || (p.getposX() - linha) <= 0 || (p.getposX() - linha) > 1 || (p.getposY() != coluna && !diagonal)){
+                                                break;
+                                            } else {
+                                                verificado = true;
+                                            }
+                                        }
+                                        colisao = verificarPosicao(personagens, linha, coluna);
+                                    break;
+            
+                                    case '♖':
+                                        //colisao = verificarPosicao(personagens, linha, coluna);
+                                    break;
+
+                                    case '♘':
+                                        //colisao = verificarPosicao(personagens, linha, coluna);
+                                    break;
+            
+                                    case '♗':
+                                        //colisao = verificarPosicao(personagens, linha, coluna);
+                                    break;
+            
+                                    case '♕':
+                                        //colisao = verificarPosicao(personagens, linha, coluna);
+                                    break;
                                 }
-
-                                personagens.get(i).setposX(linha);
-                                personagens.get(i).setposY(coluna);
-                                rodada++;
-
+    
+                                if(!verificado){
+                                    System.out.println("--------------------------------------------------------------");
+                                    System.out.println("- MOVIMENTO DE PEÇA INVÁLIDO!                                -");
+                                    System.out.println("--------------------------------------------------------------");
+                                }
+                                
+                                if(verificado && colisao){
+                                    for(j = 0; j < inimigos.size(); j++){
+                                        Inimigo I = inimigos.get(j);
+                                        if(I.getposX() == linha && I.getposY() == coluna){
+                                            inimigos.remove(j);
+                                            break;
+                                        }
+                                    }
+            
+                                    personagens.get(i).setposX(linha);
+                                    personagens.get(i).setposY(coluna);
+                                    rodada++;
+                                }    
                             }
-                            
                         }
                     }
                 break;
