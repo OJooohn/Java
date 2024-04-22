@@ -93,8 +93,7 @@ public class Main {
 
     public static boolean verificarPosicao(List<Personagem> personagens, int linha, int coluna){
         boolean verificado = false;
-        for(int j = 0; j < personagens.size(); j++){
-            Personagem p = personagens.get(j);
+        for(Personagem p : personagens){
             if(p.getposX() == linha && p.getposY() == coluna){
                 verificado = false;
                 break;
@@ -112,7 +111,7 @@ public class Main {
         return verificado;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
 
         Scanner input = new Scanner(System.in);
 
@@ -184,6 +183,7 @@ public class Main {
             String[] cortado;
             boolean verificado = false, colisao = false;
 
+            System.out.println("\033c");
             imprimirTabuleiro(personagens, inimigos);
             if(!personagens.get(0).getIcone().equals("♔")){
                 System.out.println("- PEÇAS PRETAS VENCERAM!                                     -");
