@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    // IntelliJ colors
+    // IntelliJ Terminal colors
     // Console Background: 9E9E9E
     // Error: FF0018
     // Standart output: 000000
