@@ -139,7 +139,10 @@ public class Main {
 
         int i, j, rodada = 0;
 
+        
         // Peças Brancas
+        // Rei --> Rei como posição 0 para verificar o ganhador do jogo
+        personagens.add(new Personagem("♔", 7, 4));
 
         // Peões
         for(i = 0; i < 8; i++){
@@ -162,10 +165,9 @@ public class Main {
         // Rainha
         personagens.add(new Personagem("♕", 7, 3));
         
-        // Rei
-        personagens.add(new Personagem("♔", 7, 4));
-        
         // Peças Pretas
+        // Rei --> Rei como posição 0 para verificar o ganhador do jogo
+        inimigos.add(new Inimigo("♚", 0, 4));
 
         // Peões
         for(i = 0; i < 8; i++){
@@ -186,9 +188,6 @@ public class Main {
 
         // Rainha
         inimigos.add(new Inimigo("♛", 0, 3));
-        
-        // Rei
-        inimigos.add(new Inimigo("♚", 0, 4));
 
         boolean menu = true;
 
@@ -203,6 +202,18 @@ public class Main {
             String[] cortado;
 
             imprimirTabuleiro(personagens, inimigos);
+            if(personagens.get(0).getIcone() != "♔"){
+                System.out.println("- PEÇAS PRETAS VENCERAM!                                     -");
+                System.out.println("--------------------------------------------------------------");
+                menu = false;
+                break;
+            }
+            if(inimigos.get(0).getIcone() != "♚"){
+                System.out.println("- PEÇAS BRANCAS VENCERAM!                                     -");
+                System.out.println("--------------------------------------------------------------");
+                menu = false;
+                break;
+            }
             switch(pecas){
                 case 0:
                     System.out.println("- RODADA DAS PEÇAS BRANCAS                                   -");
@@ -246,6 +257,8 @@ public class Main {
                             System.out.println("- Você selecionou uma peça preta! Selecione uma peça BRANCA!");
                             break;
                         } else {
+                            // Limitar movimentos das peças e verificar colisões ao movimentar !! PARTE MAIS DIFÍCIL DO DESAFIO !!
+                            // String iconePeca = personagens.get(i).getIcone();
                             
                             System.out.println("--------------------------------------------------------------");
                             System.out.print("- SELECIONE A PROXIMA POSIÇÃO DA PEÇA (A1 - H8): ");
@@ -272,6 +285,14 @@ public class Main {
                                     break;
                                 }
                                 
+                                for(j = 0; j < inimigos.size(); j++){
+                                    Inimigo I = inimigos.get(j);
+                                    if(I.getposX() == linha && I.getposY() == coluna){
+                                        inimigos.remove(j);
+                                        break;
+                                    }
+                                }
+
                                 personagens.get(i).setposX(linha);
                                 personagens.get(i).setposY(coluna);
                                 rodada++;
@@ -350,6 +371,14 @@ public class Main {
                                     break;
                                 }
                                 
+                                for(j = 0; j < personagens.size(); j++){
+                                    Personagem p = personagens.get(j);
+                                    if(p.getposX() == linha && p.getposY() == coluna){
+                                        personagens.remove(j);
+                                        break;
+                                    }
+                                }
+
                                 inimigos.get(i).setposX(linha);
                                 inimigos.get(i).setposY(coluna);
                                 rodada++;
