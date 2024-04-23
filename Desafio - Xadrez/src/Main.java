@@ -228,7 +228,7 @@ public class Main {
                 break;
             }
             // RETIRAR PARA FUNCIONAR NORMALMENTE
-            // pecas = 0;
+            pecas = 1;
             int deltaX, deltaY;
             boolean Xnegativo, Ynegativo;
             boolean colPers = false, colIni = false;
@@ -364,7 +364,6 @@ public class Main {
                                                     if(p.getposY() == coluna){
                                                         verificado = true;
                                                     }
-                                                    break;
                                                 } else {
                                                     if(p.getposY() == coluna)
                                                         verificado = true;
@@ -984,13 +983,15 @@ public class Main {
                                             }
 
                                             if(in.getposX() == 1){
-                                                if(in.getposX() - linha > -1){
+                                                if(in.getposX() - linha > -2){
+                                                    System.out.println("teste");
                                                     if(in.getposY() == coluna){
+                                                        System.out.println("teste2");
                                                         verificado = true;
                                                     }
-                                                    break;
                                                 } else {
-                                                    verificado = true;
+                                                    if(in.getposY() == coluna)
+                                                        verificado = true;
                                                 }
                                             } else {
                                                 if(in.getposX() > linha || (in.getposX() - linha) >= 0 || (in.getposX() - linha) < -1 || (in.getposY() != coluna && !diagonal)){
@@ -1001,6 +1002,7 @@ public class Main {
                                                 }
                                             }
 
+                                            System.out.println("Inimigo frente? " + inimigoFrente);
                                             if(inimigoFrente){
                                                 if(in.getposY() == coluna && in.getposX() + 1 == linha){
                                                     verificado = false;
@@ -1009,12 +1011,16 @@ public class Main {
                                                     break;
                                                 }
                                             } else {
+                                                System.out.println("teste3");
                                                 if(verificado && !inimigoFrente){
                                                     colisao = verificarInimigo(inimigos, linha, coluna);
                                                 } else {
                                                     break;
                                                 }
                                             }
+
+                                            System.out.println("Verificado? " + verificado);
+                                            System.out.println("Nao tera colisão? " + colisao);
                                         break;
 
                                         case '♜':
