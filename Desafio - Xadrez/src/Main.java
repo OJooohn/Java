@@ -229,8 +229,8 @@ public class Main {
             }
             // RETIRAR PARA FUNCIONAR NORMALMENTE
             // pecas = 0;
-            int deltaX, deltaY;
-            boolean Xnegativo, Ynegativo;
+            int deltaX = 0, deltaY = 0;
+            boolean Xnegativo = false, Ynegativo = false;
             boolean colPers = false, colIni = false;
             switch(pecas){
                 case 0:
@@ -294,6 +294,7 @@ public class Main {
                                 proximaPosicao = input.nextLine();
 
                                 if(proximaPosicao.equalsIgnoreCase("VOLTAR")){
+                                    verificado = true;
                                     break;
                                 } else {
 
