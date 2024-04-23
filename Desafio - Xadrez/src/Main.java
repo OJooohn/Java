@@ -4,41 +4,61 @@ import java.util.Scanner;
 
 public class Main {
 
+    // CONFIGURAR ANTES DE INICIAR O PROGRAMA!
+
     // IntelliJ Terminal colors
-    // Console Background: 9E9E9E
+    // Theme: Dark Theme Default
+    // Console Background: 1A1A1A
     // Error: FF0018
-    // Standart output: 000000
-    // System output: 000000
+    // Standart output: FFFFFF
+    // System output: FFFFFF
     // User input: 00FF24
 
-    // Green: FFFFFF both
+    // White (gray): Foreground: FFFFFF
     // Black: 656565 FFFFFF
 
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset
 
+    // Regular Colors
+    public static final String BLACK = "\033[0;30m";   // BLACK
+    public static final String WHITE = "\033[0;37m";   // WHITE
+
+    // High Intensity
+    public static final String BLACK_BRIGHT = "\033[0;90m";  // BLACK
+    public static final String WHITE_BRIGHT = "\033[0;97m";  // WHITE
+
     // Background
-    public static final String BLACK_BACKGROUND = "\033[40m";  // BLACK// RED
-    public static final String GREEN_BACKGROUND = "\033[42m";  // GREEN
+    public static final String BLACK_BACKGROUND = "\033[40m";  // BLACK
+    public static final String WHITE_BACKGROUND = "\033[47m";  // WHITE
+
+    // High Intensity backgrounds
+    public static final String BLACK_BACKGROUND_BRIGHT = "\033[0;100m";// BLACK
+    public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";   // WHITE
 
     public static void printBackground(int i, int j){
         if(i % 2 == 0){
             if(j % 2 == 0)
-                System.out.print(GREEN_BACKGROUND);
+                System.out.print(BLACK + WHITE_BACKGROUND);
             else
                 System.out.print(BLACK_BACKGROUND);
         } else {
             if(j % 2 == 0)
                 System.out.print(BLACK_BACKGROUND);
             else
-                System.out.print(GREEN_BACKGROUND);
+                System.out.print(BLACK + WHITE_BACKGROUND);
         }
     }
 
     public static void imprimirTabuleiro(List<Personagem> personagens, List<Inimigo> inimigos){
-
+        // BRANCAS: ♔ ♙ ♖ ♘ ♗ ♕
+        // PRETAS: ♚ ♟ ♜ ♞ ♝ ♛
         System.out.println("--------------------------------------------------------------");
         System.out.println("-                          TABULEIRO                         -");
+        System.out.println("--------------------------------------------------------------");
+        System.out.println("- LEGENDA:                                                   -");
+        System.out.println("- PEÇAS BRANCAS (VAZIO POR DENTRO): ♔ ♙ ♖ ♘ ♗ ♕          -");
+        System.out.println("- PEÇAS PRETAS  (PREENCHIDAS):      ♚ ♟ ♜ ♞ ♝ ♛          -");
         System.out.println("--------------------------------------------------------------");
 
         char letra = 'A';
@@ -195,7 +215,8 @@ public class Main {
                 System.out.println("--------------------------------------------------------------");
                 break;
             }
-
+            // RETIRAR PARA FUNCIONAR NORMALMENTE
+            pecas = 0;
             switch(pecas){
                 case 0:
                     System.out.println("- RODADA DAS PEÇAS BRANCAS                                   -");
@@ -331,7 +352,111 @@ public class Main {
                                     break;
             
                                     case '♖':
-                                        //colisao = verificarPosicao(personagens, linha, coluna);
+                                    if(p.getposX() == linha || p.getposY() == coluna){
+                                        if(p.getposX() == linha){
+                                            // Direita
+                                            if(p.getposY() - coluna < 0){
+                                                System.out.println("direita");
+                                                for(j = p.getposY(); j < coluna; j++){
+                                                    for(Personagem P : personagens){
+                                                        if(P.getposY() == j && P.getposX() == p.getposX()){
+                                                            verificado = false;
+                                                            break;
+                                                        } else {
+                                                            verificado = true;
+                                                        }
+                                                    }
+                                                    for(Inimigo I : inimigos){
+                                                        if(I.getposY() == j && I.getposX() == p.getposX()){
+                                                            verificado = false;
+                                                            break;
+                                                        } else {
+                                                            verificado = true;
+                                                        }
+                                                    }
+                                                }
+                                                if(verificado)
+                                                    System.out.println("verificado");
+                                                else
+                                                    System.out.println("nao verificado");
+                                            } else { 
+                                                System.out.println("esquerda");
+                                                // Esquerda
+                                                for(j = p.getposY(); j > coluna; j--){
+                                                    for(Personagem P : personagens){
+                                                        if(P.getposY() == j && P.getposX() == p.getposX()){
+                                                            verificado = false;
+                                                            break;
+                                                        } else {
+                                                            verificado = true;
+                                                        }
+                                                    }
+                                                    for(Inimigo I : inimigos){
+                                                        if(I.getposY() == j && I.getposX() == p.getposX()){
+                                                            verificado = false;
+                                                            break;
+                                                        } else {
+                                                            verificado = true;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            if(p.getposY() == coluna){
+                                                // Baixo
+                                                System.out.println("baixo");
+                                                if(p.getposX() - linha < 0){
+                                                    for(j = p.getposX(); j < linha; j++){
+                                                        for(Personagem P : personagens){
+                                                            if(P.getposX() == j && P.getposY() == p.getposY()){
+                                                                verificado = false;
+                                                                break;
+                                                            } else {
+                                                                verificado = true;
+                                                            }
+                                                        }
+                                                        for(Inimigo I : inimigos){
+                                                            if(I.getposX() == j && I.getposY() == p.getposY()){
+                                                                verificado = false;
+                                                                break;
+                                                            } else {
+                                                                verificado = true;
+                                                            }
+                                                        }
+                                                    }
+                                                } else {
+                                                    // Acima
+                                                    System.out.println("cima");
+                                                    for(j = p.getposX(); j > linha; j--){
+                                                        for(Personagem P : personagens){
+                                                            if(P.getposX() == j && P.getposY() == p.getposY()){
+                                                                verificado = false;
+                                                                break;
+                                                            } else {
+                                                                verificado = true;
+                                                            }
+                                                        }
+                                                        for(Inimigo I : inimigos){
+                                                            if(I.getposX() == j && I.getposY() == p.getposY()){
+                                                                verificado = false;
+                                                                break;
+                                                            } else {
+                                                                verificado = true;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+                                                verificado = false;
+                                                break;
+                                            }
+                                        }
+                                    } else {
+                                        verificado = false;
+                                        break;
+                                    }
+                                       
+                                    colisao = verificarPosicao(personagens, linha, coluna);
                                     break;
 
                                     case '♘':
@@ -361,7 +486,7 @@ public class Main {
                                             break;
                                         }
                                     }
-            
+                                    
                                     personagens.get(i).setposX(linha);
                                     personagens.get(i).setposY(coluna);
                                     rodada++;
