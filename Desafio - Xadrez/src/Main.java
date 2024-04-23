@@ -203,7 +203,6 @@ public class Main {
             String[] cortado;
             boolean verificado = false, colisao = false;
 
-            System.out.println("\033c");
             imprimirTabuleiro(personagens, inimigos);
             if(!personagens.get(0).getIcone().equals("♔")){
                 System.out.println("- PEÇAS PRETAS VENCERAM!                                     -");
