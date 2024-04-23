@@ -229,8 +229,8 @@ public class Main {
             }
             // RETIRAR PARA FUNCIONAR NORMALMENTE
             // pecas = 0;
-            int deltaX = 0, deltaY = 0;
-            boolean Xnegativo = false, Ynegativo = false;
+            int deltaX, deltaY;
+            boolean Xnegativo, Ynegativo;
             boolean colPers = false, colIni = false;
             switch(pecas){
                 case 0:
@@ -294,7 +294,6 @@ public class Main {
                                 proximaPosicao = input.nextLine();
 
                                 if(proximaPosicao.equalsIgnoreCase("VOLTAR")){
-                                    verificado = true;
                                     break;
                                 } else {
 
@@ -361,24 +360,14 @@ public class Main {
                                             }
     
                                             if(p.getposX() == 6){
-                                                for(j = 0; j < inimigos.size(); j++){
-                                                    Inimigo I = inimigos.get(j);
-                                                    if(I.getposX() + 1 == p.getposX() && I.getposY() - 1 == p.getposY()){
-                                                        diagonal = true;
-                                                        break;
-                                                    }
-                                                    if(I.getposX() + 1 == p.getposX() && I.getposY() + 1 == p.getposY()){
-                                                        diagonal = true;
-                                                        break;
-                                                    }
-                                                }
-                                                if(p.getposX() - linha > 2){
+                                                if(p.getposX() - linha > 2 && p.getposY() == coluna){
                                                     if(p.getposY() == coluna){
                                                         verificado = true;
                                                     }
                                                     break;
                                                 } else {
-                                                    verificado = true;
+                                                    if(p.getposY() == coluna)
+                                                        verificado = true;
                                                 }
                                             } else {
                                                 if(p.getposX() < linha || (p.getposX() - linha) <= 0 || (p.getposX() - linha) > 1 || (p.getposY() != coluna && !diagonal)){
