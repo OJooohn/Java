@@ -227,7 +227,7 @@ public class Main {
                     break;
                 }
                 // RETIRAR PARA FUNCIONAR NORMALMENTE
-                // pecas = 1;
+                //pecas = 1;
                 int deltaX, deltaY;
                 boolean Xnegativo, Ynegativo;
                 boolean colPers = false, colIni = false;
@@ -1132,8 +1132,18 @@ public class Main {
                                             case '♝':
                                             deltaX = in.getposX() - linha;
                                             deltaY = in.getposY() - coluna;
+
                                             Xnegativo = false;
                                             Ynegativo = false;
+   
+                                            if(deltaX < 0){
+                                                deltaX *= -1;
+                                                Xnegativo = true;
+                                            }
+                                            if(deltaY < 0){
+                                                deltaY *= -1;
+                                                Ynegativo = true;
+                                            }
 
                                             if(deltaX == deltaY){
                                                 int aux; // aux = X e j = Y
@@ -1142,7 +1152,6 @@ public class Main {
                                                         for(j = in.getposY() - 1; j > coluna; j--){
                                                             for(Personagem P : personagens){
                                                                 if(P.getposX() == aux && P.getposY() == j){
-                                                                    System.out.println("Peca = " + P.getIcone() + " | X = " + P.getposX() + " | Y = " + P.getposY());
                                                                     verificado = false;
                                                                     break;
                                                                 } else {
