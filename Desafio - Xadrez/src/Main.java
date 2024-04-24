@@ -809,10 +809,12 @@ public class Main {
                                                             }
                                                         }
                                                         if(!Xnegativo && Ynegativo){
+                                                            System.out.println("a");
                                                             for(aux = p.getposX() - 1; aux > linha; aux--){
                                                                 for(j = p.getposY() + 1; j < coluna; j++){
                                                                     for(Personagem P : personagens){
                                                                         if(P.getposX() == aux && P.getposY() == j){
+                                                                            System.out.println("Peca = " + P.getIcone() + " | X =" + P.getposX() + " | Y = " + P.getposY());
                                                                             verificado = false;
                                                                             break;
                                                                         } else {
@@ -822,6 +824,7 @@ public class Main {
                                                                     if(verificado){
                                                                         for(Inimigo I : inimigos){
                                                                             if(I.getposX() == aux && I.getposY() == j){
+                                                                                System.out.println("Ini = " + I.getIcone() + " | X =" + I.getposX() + " | Y = " + I.getposY());
                                                                                 verificado = false;
                                                                                 break;
                                                                             } else {
@@ -833,8 +836,10 @@ public class Main {
                                                             }
                                                         }
                                                     }
-                                                } else
+                                                } else{
                                                     verificado = false;
+                                                    break;
+                                                }
                                                 colisao = verificarPosicao(personagens, linha, coluna);
                                             }
                                             break;
