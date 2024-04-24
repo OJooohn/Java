@@ -448,8 +448,9 @@ public class Main {
                         for(j = p.getposY() - 1; j >= coluna; j--){
                             for(Personagem P : personagens){
                                 if(P.getposX() == aux && P.getposY() == j){
+                                    // System.out.println("Peca = " + P.getIcone() + " X = " + P.getposX() + " | Y = " + P.getposY());
                                     verificado = false;
-                                    break;
+                                    return verificado;
                                 } else {
                                     verificado = true;
                                 }
@@ -459,7 +460,7 @@ public class Main {
                                     if(I.getposX() == aux && I.getposY() == j){
                                         if(aux != linha && j != coluna){
                                             verificado = false;
-                                            break;
+                                            return verificado;
                                         }
                                     } else {
                                         verificado = true;
@@ -476,7 +477,7 @@ public class Main {
                             for(Personagem P : personagens){
                                 if(P.getposX() == aux && P.getposY() == j){
                                     verificado = false;
-                                    break;
+                                    return verificado;
                                 } else {
                                     verificado = true;
                                 }
@@ -486,7 +487,7 @@ public class Main {
                                     if(I.getposX() == aux && I.getposY() == j){
                                         if(aux != linha && j != coluna){
                                             verificado = false;
-                                            break;
+                                            return verificado;
                                         }
                                     } else {
                                         verificado = true;
@@ -502,7 +503,7 @@ public class Main {
                                 for(Personagem P : personagens){
                                     if(P.getposX() == aux && P.getposY() == j){
                                         verificado = false;
-                                        break;
+                                        return verificado;
                                     } else {
                                         verificado = true;
                                     }
@@ -512,7 +513,7 @@ public class Main {
                                         if(I.getposX() == aux && I.getposY() == j){
                                             if(aux != linha && j != coluna){
                                                 verificado = false;
-                                                break;
+                                                return verificado;
                                             }
                                         } else {
                                             verificado = true;
@@ -528,7 +529,7 @@ public class Main {
                                 for(Personagem P : personagens){
                                     if(P.getposX() == aux && P.getposY() == j){
                                         verificado = false;
-                                        break;
+                                        return verificado;
                                     } else {
                                         verificado = true;
                                     }
@@ -538,7 +539,7 @@ public class Main {
                                         if(I.getposX() == aux && I.getposY() == j){
                                             if(aux != linha && j != coluna){
                                                 verificado = false;
-                                                break;
+                                                return verificado;
                                             }
                                         } else {
                                             verificado = true;
@@ -573,7 +574,7 @@ public class Main {
                             for(Inimigo I : inimigos){
                                 if(I.getposX() == aux && I.getposY() == j){
                                     verificado = false;
-                                    break;
+                                    return verificado;
                                 } else {
                                     verificado = true;
                                 }
@@ -583,7 +584,7 @@ public class Main {
                                     if(P.getposX() == aux && P.getposY() == j){
                                         if(aux != linha && j != coluna){
                                             verificado = false;
-                                            break;
+                                            return verificado;
                                         }
                                     } else {
                                         verificado = true;
@@ -599,7 +600,7 @@ public class Main {
                             for(Inimigo I : inimigos){
                                 if(I.getposX() == aux && I.getposY() == j){
                                     verificado = false;
-                                    break;
+                                    return verificado;
                                 } else {
                                     verificado = true;
                                 }
@@ -609,7 +610,7 @@ public class Main {
                                     if(P.getposX() == aux && P.getposY() == j){
                                         if(aux != linha && j != coluna){
                                             verificado = false;
-                                            break;
+                                            return verificado;
                                         }
                                     } else {
                                         verificado = true;
@@ -625,7 +626,7 @@ public class Main {
                                 for(Inimigo I : inimigos){
                                     if(I.getposX() == aux && I.getposY() == j){
                                         verificado = false;
-                                        break;
+                                        return verificado;
                                     } else {
                                         verificado = true;
                                     }
@@ -635,7 +636,7 @@ public class Main {
                                         if(P.getposX() == aux && P.getposY() == j){
                                             if(aux != linha && j != coluna){
                                                 verificado = false;
-                                                break;
+                                                return verificado;
                                             }
                                         } else {
                                             verificado = true;
@@ -651,7 +652,7 @@ public class Main {
                                 for(Inimigo I : inimigos){
                                     if(I.getposX() == aux && I.getposY() == j){
                                         verificado = false;
-                                        break;
+                                        return verificado;
                                     } else {
                                         verificado = true;
                                     }
@@ -661,7 +662,7 @@ public class Main {
                                         if(P.getposX() == aux && P.getposY() == j){
                                             if(aux != linha && j != coluna){
                                                 verificado = false;
-                                                break;
+                                                return verificado;
                                             }
                                         } else {
                                             verificado = true;
