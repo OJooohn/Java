@@ -227,7 +227,7 @@ public class Main {
                     break;
                 }
                 // RETIRAR PARA FUNCIONAR NORMALMENTE
-                pecas = 1;
+                //pecas = 1;
                 int deltaX, deltaY;
                 boolean Xnegativo, Ynegativo;
                 boolean colPers = false, colIni = false;
@@ -322,6 +322,13 @@ public class Main {
                                         // BRANCAS: ♔ ♙ ♖ ♘ ♗ ♕
                                         // PRETAS: ♚ ♟ ♜ ♞ ♝ ♛
                                         
+                                        // O movimento do REI é igual para os dois tipos
+                                        // A peça peão pode colocar em uma função, indicando com a variável peça (identificador das cores das peças)
+                                        // O movimento da TORRE é igual para os dois tipos
+                                        // O movimento do CAVALO é igual para os dois tipos
+                                        // O movimento do BISPO é igual para os dois tipos
+                                        // O movimento da RAINHA ´igual para os dois tipos
+
                                         Personagem p = personagens.get(i);
                                         switch(icone){
                                             case '♔':
