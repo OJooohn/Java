@@ -619,7 +619,7 @@ public class Main {
                     break;
                 }
                 // RETIRAR PARA FUNCIONAR NORMALMENTE
-                pecas = 0;
+                // pecas = 0;
 
                 switch (pecas) {
                     case 0:
