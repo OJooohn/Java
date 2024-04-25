@@ -131,8 +131,6 @@ public class Main {
         boolean verificado = false;
         for (Personagem p : personagens) {
             if (p.getposX() == linha && p.getposY() == coluna) {
-                // System.out.println("Peca = " + p.getIcone() + " | X = " + p.getposX() + " | Y
-                // = " + p.getposY());
                 verificado = false;
                 break;
             } else {
@@ -153,8 +151,6 @@ public class Main {
         boolean verificado = false;
         for (Inimigo i : inimigos) {
             if (i.getposX() == linha && i.getposY() == coluna) {
-                // System.out.println("Peca = " + p.getIcone() + " | X = " + p.getposX() + " | Y
-                // = " + p.getposY());
                 verificado = false;
                 break;
             } else {
@@ -171,7 +167,160 @@ public class Main {
         return verificado;
     }
 
-    public static boolean verificarRei(int linha, int coluna, Peca p) {
+    public static boolean verificarCastling(Peca p, int linha, int coluna, List<Personagem> personagens,
+            List<Inimigo> inimigos, int pecas) {
+
+        boolean torreDireita = false, torreEsquerda = false, castling = false;
+        int indiceTorre;
+
+        int Xd, Yd, Xe, Ye;
+
+        if (pecas == 0) {
+            Xd = 7;
+            Yd = 7;
+            Xe = 7;
+            Ye = 0;
+        } else {
+            Xd = 0;
+            Yd = 7;
+            Xe = 0;
+            Ye = 0;
+        }
+
+        if ((linha == Xe && coluna == Ye) || (linha == Xd && coluna == Yd)) {
+            if (p.getMovimentos() == 0) {
+                if (pecas == 0) {
+                    for (indiceTorre = 0; indiceTorre < personagens.size(); indiceTorre++) {
+                        Personagem pers = personagens.get(indiceTorre);
+
+                        if (pers.getMovimentos() == 0 && pers.getIcone().equals("♖")) {
+                            if ((pers.getposX() == linha && pers.getposY() == coluna)
+                                    && (linha == Xd && coluna == Yd)) {
+                                torreDireita = true;
+                                torreEsquerda = false;
+                                break;
+                            }
+                            if ((pers.getposX() == linha && pers.getposY() == coluna)
+                                    && (linha == Xe && coluna == Ye)) {
+                                torreDireita = false;
+                                torreEsquerda = true;
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    for (indiceTorre = 0; indiceTorre < inimigos.size(); indiceTorre++) {
+                        Inimigo ini = inimigos.get(indiceTorre);
+
+                        if (ini.getMovimentos() == 0 && ini.getIcone().equals("♜")) {
+                            if ((ini.getposX() == linha && ini.getposY() == coluna) && (linha == Xd && coluna == Yd)) {
+                                torreDireita = true;
+                                torreEsquerda = false;
+                                break;
+                            }
+                            if ((ini.getposX() == linha && ini.getposY() == coluna) && (linha == Xe && coluna == Ye)) {
+                                torreDireita = false;
+                                torreEsquerda = true;
+                                break;
+                            }
+                        }
+
+                    }
+                }
+
+                if (!torreDireita && !torreEsquerda) {
+                    return false;
+                }
+
+                int i;
+
+                if (torreDireita) {
+                    if (pecas == 0) {
+
+                        for (i = p.getposY(); i < 7; i++) {
+                            for (Personagem pers : personagens) {
+
+                                if (pers.getposX() == 7 && pers.getposY() == i && !pers.getIcone().equals("♖")
+                                        && !pers.getIcone().equals("♔")) {
+                                    return false;
+                                }
+
+                            }
+                        }
+
+                        p.setposY(6);
+                        personagens.get(indiceTorre).setposY(5);
+
+                        castling = true;
+                    } else {
+
+                        for (i = p.getposY(); i < 7; i++) {
+                            for (Inimigo pers : inimigos) {
+
+                                if (pers.getposX() == 0 && pers.getposY() == i && !pers.getIcone().equals("♜")
+                                        && !pers.getIcone().equals("♚")) {
+                                    return false;
+                                }
+
+                            }
+                        }
+
+                        p.setposY(6);
+                        inimigos.get(indiceTorre).setposY(5);
+
+                        castling = true;
+                        System.out.println("Castling: " + castling);
+                    }
+                    return true;
+                }
+
+                if (torreEsquerda) {
+                    if (pecas == 0) {
+
+                        for (i = p.getposY(); i > 0; i--) {
+                            for (Personagem pers : personagens) {
+
+                                if (pers.getposX() == 7 && pers.getposY() == i && !pers.getIcone().equals("♖")
+                                        && !pers.getIcone().equals("♔")) {
+                                    return false;
+                                }
+
+                            }
+                        }
+
+                        p.setposY(2);
+                        personagens.get(indiceTorre).setposY(3);
+
+                        castling = true;
+                    } else {
+
+                        for (i = p.getposY(); i > 0; i--) {
+                            for (Inimigo pers : inimigos) {
+
+                                if (pers.getposX() == 0 && pers.getposY() == i && !pers.getIcone().equals("♜")
+                                        && !pers.getIcone().equals("♚")) {
+                                    return false;
+                                }
+
+                            }
+                        }
+
+                        p.setposY(2);
+                        inimigos.get(indiceTorre).setposY(3);
+
+                        castling = true;
+                    }
+                    return true;
+                }
+
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean verificarRei(int linha, int coluna, Peca p, List<Personagem> personagens,
+            List<Inimigo> inimigos, int pecas, boolean castling) {
 
         return (p.getposX() - linha) <= 1 && (p.getposX() - linha) >= -1 && (p.getposY() - coluna) <= 1
                 && (p.getposY() - coluna) >= -1;
@@ -595,6 +744,7 @@ public class Main {
             inimigos.add(new Inimigo("♛", 0, 3));
 
             boolean menu = true;
+            boolean castling = false;
 
             // Letras = j | Numeros = i
 
@@ -739,9 +889,24 @@ public class Main {
                                         icone = personagens.get(i).getIcone().charAt(0);
 
                                         Personagem p = personagens.get(i);
+                                        castling = false;
+
                                         switch (icone) {
                                             case '♔':
-                                                verificado = verificarRei(linha, coluna, p);
+                                                castling = verificarCastling(p, linha, coluna, personagens, inimigos,
+                                                        pecas);
+                                                if (castling) {
+                                                    verificado = true;
+                                                    System.out.println(GREEN
+                                                            + "--------------------------------------------------------------");
+                                                    System.out.println(GREEN
+                                                            + "- ROQUE REALIZADO COM SUCESSO!                               -");
+                                                    System.out.println(GREEN
+                                                            + "--------------------------------------------------------------");
+                                                } else {
+                                                    verificado = verificarRei(linha, coluna, p, personagens, inimigos,
+                                                            pecas, castling);
+                                                }
                                                 break;
 
                                             case '♙':
@@ -819,7 +984,12 @@ public class Main {
                                                         coluna, p);
                                                 break;
                                         }
-                                        colisao = verificarPosicao(personagens, linha, coluna);
+
+                                        if (castling) {
+                                            colisao = true;
+                                        } else {
+                                            colisao = verificarPosicao(personagens, linha, coluna);
+                                        }
 
                                         if (!verificado) {
                                             System.out.println(GREEN
@@ -842,8 +1012,12 @@ public class Main {
                                                 }
                                             }
 
-                                            personagens.get(i).setposX(linha);
-                                            personagens.get(i).setposY(coluna);
+                                            if (!castling) {
+                                                System.out.println("teste");
+                                                personagens.get(i).setposX(linha);
+                                                personagens.get(i).setposY(coluna);
+                                            }
+                                            personagens.get(i).aumentarMovimentos();
                                             rodada++;
                                         }
 
@@ -967,13 +1141,23 @@ public class Main {
 
                                         icone = inimigos.get(i).getIcone().charAt(0);
 
-                                        // BRANCAS: ♔ ♙ ♖ ♘ ♗ ♕
-                                        // PRETAS: ♚ ♟ ♜ ♞ ♝ ♛
-
                                         Inimigo in = inimigos.get(i);
                                         switch (icone) {
                                             case '♚':
-                                                verificado = verificarRei(linha, coluna, in);
+                                                castling = verificarCastling(in, linha, coluna, personagens, inimigos,
+                                                        pecas);
+                                                if (castling) {
+                                                    verificado = true;
+                                                    System.out.println(GREEN
+                                                            + "--------------------------------------------------------------");
+                                                    System.out.println(GREEN
+                                                            + "- ROQUE REALIZADO COM SUCESSO!                               -");
+                                                    System.out.println(GREEN
+                                                            + "--------------------------------------------------------------");
+                                                } else {
+                                                    verificado = verificarRei(linha, coluna, in, personagens, inimigos,
+                                                            pecas, castling);
+                                                }
                                                 break;
 
                                             case '♟':
@@ -1051,7 +1235,11 @@ public class Main {
                                                 break;
                                         }
 
-                                        colisao = verificarInimigo(inimigos, linha, coluna);
+                                        if (castling) {
+                                            colisao = true;
+                                        } else {
+                                            colisao = verificarPosicao(personagens, linha, coluna);
+                                        }
 
                                         if (!verificado) {
                                             System.out.println(GREEN
@@ -1074,8 +1262,12 @@ public class Main {
                                                 }
                                             }
 
-                                            inimigos.get(i).setposX(linha);
-                                            inimigos.get(i).setposY(coluna);
+                                            if (!castling) {
+                                                inimigos.get(i).setposX(linha);
+                                                inimigos.get(i).setposY(coluna);
+                                            }
+
+                                            inimigos.get(i).aumentarMovimentos();
                                             rodada++;
                                         }
 

@@ -3,11 +3,13 @@ public class Peca {
   private String icone;
   private int posX;
   private int posY;
+  private int movimentos;
 
   public Peca(String icone, int posX, int posY){
     this.icone = icone;
     this.posX = posX;
     this.posY = posY;
+    this.movimentos = 0;
   }
 
   public String getIcone(){
@@ -22,6 +24,10 @@ public class Peca {
     return this.posY;
   }
 
+  public int getMovimentos(){
+    return this.movimentos;
+  }
+
   public void setIcone(String icone){
     this.icone = icone;
   }
@@ -32,6 +38,14 @@ public class Peca {
 
   public void setposY(int posY){
     this.posY = posY;
+  }
+
+  public void setMovimentos(int movimentos){
+    this.movimentos = movimentos;
+  }
+  
+  public void aumentarMovimentos(){
+    this.setMovimentos(getMovimentos() + 1);
   }
   
 }
