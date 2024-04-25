@@ -71,8 +71,8 @@ public class Main {
         System.out.println(GREEN + "-                          TABULEIRO                         -");
         System.out.println(GREEN + "--------------------------------------------------------------");
         System.out.println(GREEN + "- LEGENDA:                                                   -");
-        System.out.println(GREEN + "- PEÇAS BRANCAS (VAZIO POR DENTRO):" + RESET + WHITE_BACKGROUND + " ♔ " + BLACK_BACKGROUND + " ♙ " + WHITE_BACKGROUND + " ♖ " + BLACK_BACKGROUND + " ♘ " + WHITE_BACKGROUND + " ♗ " + BLACK_BACKGROUND + " ♕ " + GREEN + "    -");
-        System.out.println(GREEN + "- PEÇAS PRETAS  (PREENCHIDAS):     " + RESET + BLACK_BACKGROUND + " ♚ " + WHITE_BACKGROUND + " ♟ " + BLACK_BACKGROUND + " ♜ " + WHITE_BACKGROUND + " ♞ " + BLACK_BACKGROUND + " ♝ " + WHITE_BACKGROUND + " ♛ " + GREEN + "    -");
+        System.out.println(GREEN + "- PEÇAS BRANCAS (VAZIO POR DENTRO): " + RESET + WHITE_BACKGROUND + " ♔ " + BLACK_BACKGROUND + " ♙ " + WHITE_BACKGROUND + " ♖ " + BLACK_BACKGROUND + " ♘ " + WHITE_BACKGROUND + " ♗ " + BLACK_BACKGROUND + " ♕ " + GREEN + "   -");
+        System.out.println(GREEN + "- PEÇAS PRETAS  (PREENCHIDAS):      " + RESET + BLACK_BACKGROUND + " ♚ " + WHITE_BACKGROUND + " ♟ " + BLACK_BACKGROUND + " ♜ " + WHITE_BACKGROUND + " ♞ " + BLACK_BACKGROUND + " ♝ " + WHITE_BACKGROUND + " ♛ " + GREEN + "   -");
         System.out.println(GREEN + "--------------------------------------------------------------");
 
         char letra = 'A';
