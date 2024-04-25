@@ -311,24 +311,24 @@ public class Main {
             Ynegativo = true;
         }
 
-        if(deltaX == deltaY){
+        if (deltaX == deltaY) {
             // aux = X e j = Y
-            if(!Xnegativo && !Ynegativo){
-                for(aux = p.getposX() - 1; aux >= linha; aux--){
-                    for(j = p.getposY() - 1; j >= coluna; j--){
-                        if(pecas == 0){
-                            for(Personagem P : personagens){
-                                if(P.getposX() == aux && P.getposY() == j){
+            if (!Xnegativo && !Ynegativo) {
+                for (aux = p.getposX() - 1; aux >= linha; aux--) {
+                    for (j = p.getposY() - 1; j >= coluna; j--) {
+                        if (pecas == 0) {
+                            for (Personagem P : personagens) {
+                                if (P.getposX() == aux && P.getposY() == j) {
                                     verificado = false;
                                     return verificado;
                                 } else {
                                     verificado = true;
                                 }
                             }
-                            if(verificado){
-                                for(Inimigo I : inimigos){
-                                    if(I.getposX() == aux && I.getposY() == j){
-                                        if(aux != linha && j != coluna){
+                            if (verificado) {
+                                for (Inimigo I : inimigos) {
+                                    if (I.getposX() == aux && I.getposY() == j) {
+                                        if (aux != linha && j != coluna) {
                                             verificado = false;
                                             return verificado;
                                         }
@@ -339,18 +339,18 @@ public class Main {
                             }
                             return verificado;
                         } else {
-                            for(Inimigo I : inimigos){
-                                if(I.getposX() == aux && I.getposY() == j){
+                            for (Inimigo I : inimigos) {
+                                if (I.getposX() == aux && I.getposY() == j) {
                                     verificado = false;
                                     return verificado;
                                 } else {
                                     verificado = true;
                                 }
                             }
-                            if(verificado){
-                                for(Personagem P : personagens){
-                                    if(P.getposX() == aux && P.getposY() == j){
-                                        if(aux != linha && j != coluna){
+                            if (verificado) {
+                                for (Personagem P : personagens) {
+                                    if (P.getposX() == aux && P.getposY() == j) {
+                                        if (aux != linha && j != coluna) {
                                             verificado = false;
                                             return verificado;
                                         }
@@ -364,22 +364,22 @@ public class Main {
                     }
                 }
             }
-            if(Xnegativo && Ynegativo){
-                for(aux = p.getposX() + 1; aux <= linha; aux++){
-                    for(j = p.getposY() + 1; j <= coluna; j++){
-                        if(pecas == 0){
-                            for(Personagem P : personagens){
-                                if(P.getposX() == aux && P.getposY() == j){
+            if (Xnegativo && Ynegativo) {
+                for (aux = p.getposX() + 1; aux <= linha; aux++) {
+                    for (j = p.getposY() + 1; j <= coluna; j++) {
+                        if (pecas == 0) {
+                            for (Personagem P : personagens) {
+                                if (P.getposX() == aux && P.getposY() == j) {
                                     verificado = false;
                                     return verificado;
                                 } else {
                                     verificado = true;
                                 }
                             }
-                            if(verificado){
-                                for(Inimigo I : inimigos){
-                                    if(I.getposX() == aux && I.getposY() == j){
-                                        if(aux != linha && j != coluna){
+                            if (verificado) {
+                                for (Inimigo I : inimigos) {
+                                    if (I.getposX() == aux && I.getposY() == j) {
+                                        if (aux != linha && j != coluna) {
                                             verificado = false;
                                             return verificado;
                                         }
@@ -390,18 +390,18 @@ public class Main {
                             }
                             return verificado;
                         } else {
-                            for(Inimigo I : inimigos){
-                                if(I.getposX() == aux && I.getposY() == j){
+                            for (Inimigo I : inimigos) {
+                                if (I.getposX() == aux && I.getposY() == j) {
                                     verificado = false;
                                     return verificado;
                                 } else {
                                     verificado = true;
                                 }
                             }
-                            if(verificado){
-                                for(Personagem P : personagens){
-                                    if(P.getposX() == aux && P.getposY() == j){
-                                        if(aux != linha && j != coluna){
+                            if (verificado) {
+                                for (Personagem P : personagens) {
+                                    if (P.getposX() == aux && P.getposY() == j) {
+                                        if (aux != linha && j != coluna) {
                                             verificado = false;
                                             return verificado;
                                         }
@@ -415,22 +415,22 @@ public class Main {
                     }
                 }
             } else {
-                if(Xnegativo && !Ynegativo){
-                    for(aux = p.getposX() + 1; aux <= linha; aux++){
-                        for(j = p.getposY() - 1; j >= coluna; j--) {
-                            if(pecas == 0){
-                                for(Personagem P : personagens){
-                                    if(P.getposX() == aux && P.getposY() == j){
+                if (Xnegativo && !Ynegativo) {
+                    for (aux = p.getposX() + 1; aux <= linha; aux++) {
+                        for (j = p.getposY() - 1; j >= coluna; j--) {
+                            if (pecas == 0) {
+                                for (Personagem P : personagens) {
+                                    if (P.getposX() == aux && P.getposY() == j) {
                                         verificado = false;
                                         return verificado;
                                     } else {
                                         verificado = true;
                                     }
                                 }
-                                if(verificado){
-                                    for(Inimigo I : inimigos){
-                                        if(I.getposX() == aux && I.getposY() == j){
-                                            if(aux != linha && j != coluna){
+                                if (verificado) {
+                                    for (Inimigo I : inimigos) {
+                                        if (I.getposX() == aux && I.getposY() == j) {
+                                            if (aux != linha && j != coluna) {
                                                 verificado = false;
                                                 return verificado;
                                             }
@@ -441,18 +441,18 @@ public class Main {
                                 }
                                 return verificado;
                             } else {
-                                for(Inimigo I : inimigos){
-                                    if(I.getposX() == aux && I.getposY() == j){
+                                for (Inimigo I : inimigos) {
+                                    if (I.getposX() == aux && I.getposY() == j) {
                                         verificado = false;
                                         return verificado;
                                     } else {
                                         verificado = true;
                                     }
                                 }
-                                if(verificado){
-                                    for(Personagem P : personagens){
-                                        if(P.getposX() == aux && P.getposY() == j){
-                                            if(aux != linha && j != coluna){
+                                if (verificado) {
+                                    for (Personagem P : personagens) {
+                                        if (P.getposX() == aux && P.getposY() == j) {
+                                            if (aux != linha && j != coluna) {
                                                 verificado = false;
                                                 return verificado;
                                             }
@@ -466,22 +466,22 @@ public class Main {
                         }
                     }
                 }
-                if(!Xnegativo && Ynegativo){
-                    for(aux = p.getposX() - 1; aux >= linha; aux--){
-                        for(j = p.getposY() + 1; j <= coluna; j++){
-                            if(pecas == 0){
-                                for(Personagem P : personagens){
-                                    if(P.getposX() == aux && P.getposY() == j){
+                if (!Xnegativo && Ynegativo) {
+                    for (aux = p.getposX() - 1; aux >= linha; aux--) {
+                        for (j = p.getposY() + 1; j <= coluna; j++) {
+                            if (pecas == 0) {
+                                for (Personagem P : personagens) {
+                                    if (P.getposX() == aux && P.getposY() == j) {
                                         verificado = false;
                                         return verificado;
                                     } else {
                                         verificado = true;
                                     }
                                 }
-                                if(verificado){
-                                    for(Inimigo I : inimigos){
-                                        if(I.getposX() == aux && I.getposY() == j){
-                                            if(aux != linha && j != coluna){
+                                if (verificado) {
+                                    for (Inimigo I : inimigos) {
+                                        if (I.getposX() == aux && I.getposY() == j) {
+                                            if (aux != linha && j != coluna) {
                                                 verificado = false;
                                                 return verificado;
                                             }
@@ -492,18 +492,18 @@ public class Main {
                                 }
                                 return verificado;
                             } else {
-                                for(Inimigo I : inimigos){
-                                    if(I.getposX() == aux && I.getposY() == j){
+                                for (Inimigo I : inimigos) {
+                                    if (I.getposX() == aux && I.getposY() == j) {
                                         verificado = false;
                                         return verificado;
                                     } else {
                                         verificado = true;
                                     }
                                 }
-                                if(verificado){
-                                    for(Personagem P : personagens){
-                                        if(P.getposX() == aux && P.getposY() == j){
-                                            if(aux != linha && j != coluna){
+                                if (verificado) {
+                                    for (Personagem P : personagens) {
+                                        if (P.getposX() == aux && P.getposY() == j) {
+                                            if (aux != linha && j != coluna) {
                                                 verificado = false;
                                                 return verificado;
                                             }
