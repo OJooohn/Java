@@ -8,61 +8,83 @@ public class Main {
 
     // IntelliJ Terminal colors
     // Theme: Dark Theme Default
-    // Console Background: 1A1A1A
-    // Error: FF0018
-    // Standart output: FFFFFF
+    // Console Background: 000000
+    // Error: FF0019
+    // Standart output: 000000
     // System output: FFFFFF
     // User input: 00FF24
 
-    // White (gray): Foreground: FFFFFF
-    // Black: 656565 FFFFFF
+    // Está em ordem nas configurações
+    // Black: B16E41 both
+    // Cyan: B16E41 both
+    // Green: FFFFFF both
+    // White (gray): FFD599 both
+    // Bright Red: FFD599 both
 
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset
 
     // Regular Colors
     public static final String BLACK = "\033[0;30m";   // BLACK
+    public static final String WHITE = "\033[0;37m";   // WHITE
+    public static final String RED = "\033[0;31m";     // RED --> errors
+    public static final String BLUE = "\033[0;34m";    // BLUE --> press to continue
+
+    public static final String GREEN = "\033[0;32m";   // GREEN --> WHITE CHARACTER IN INTELLIJ
+
+    public static final String RED_BRIGHT = "\033[0;91m";    // RED --> para caracteres brancos
+    public static final String CYAN = "\033[0;36m";   // CYAN --> para caracteres pretos
 
     // Background
     public static final String BLACK_BACKGROUND = "\033[40m";  // BLACK
     public static final String WHITE_BACKGROUND = "\033[47m";  // WHITE
 
+    public static void pressToContinue(Scanner input){
+        System.out.println(GREEN + "--------------------------------------------------------------");
+        System.out.println(GREEN + "- " + BLUE + "Pressione qualquer tecla para continuar..." + RESET + "                 -");
+        System.out.println(GREEN + "--------------------------------------------------------------");
+        input.nextLine();
+    }
+
     public static void printBackground(int i, int j){
         if(i % 2 == 0){
             if(j % 2 == 0)
-                System.out.print(BLACK + WHITE_BACKGROUND);
+                System.out.print(WHITE_BACKGROUND);
             else
                 System.out.print(BLACK_BACKGROUND);
         } else {
             if(j % 2 == 0)
                 System.out.print(BLACK_BACKGROUND);
             else
-                System.out.print(BLACK + WHITE_BACKGROUND);
+                System.out.print(WHITE_BACKGROUND);
         }
     }
 
     public static void imprimirTabuleiro(List<Personagem> personagens, List<Inimigo> inimigos){
         // BRANCAS: ♔ ♙ ♖ ♘ ♗ ♕
         // PRETAS: ♚ ♟ ♜ ♞ ♝ ♛
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("-                          TABULEIRO                         -");
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("- LEGENDA:                                                   -");
-        System.out.println("- PEÇAS BRANCAS (VAZIO POR DENTRO): ♔ ♙ ♖ ♘ ♗ ♕          -");
-        System.out.println("- PEÇAS PRETAS  (PREENCHIDAS):      ♚ ♟ ♜ ♞ ♝ ♛          -");
-        System.out.println("--------------------------------------------------------------");
+        int i;
+        for(i = 0; i < 15; i++){
+            System.out.println();
+        }
+        System.out.println(GREEN + "--------------------------------------------------------------");
+        System.out.println(GREEN + "-                          TABULEIRO                         -");
+        System.out.println(GREEN + "--------------------------------------------------------------");
+        System.out.println(GREEN + "- LEGENDA:                                                   -");
+        System.out.println(GREEN + "- PEÇAS BRANCAS (VAZIO POR DENTRO): ♔  ♙  ♖  ♘  ♗  ♕     -");
+        System.out.println(GREEN + "- PEÇAS PRETAS  (PREENCHIDAS):      ♚  ♟  ♜  ♞  ♝  ♛     -");
+        System.out.println(GREEN + "--------------------------------------------------------------");
 
         char letra = 'A';
-        int i;
         System.out.print("     \t");
         for(i = 0; i < 8; i++){
-            System.out.print("[ " + (i + 1) + RESET + " ]");
+            System.out.print(GREEN + "[ " + (i + 1) + " ]" + RESET);
         }
         System.out.println();
         System.out.println();
 
         for (int j = 0; j < 8; j++, letra++) {
-            System.out.print("[ " + letra + RESET + " ]\t");
+            System.out.print(GREEN + "[ " + letra + " ]\t" + RESET);
             for (i = 0; i < 8; i++) {
                 printBackground(i, j);
                 boolean encontrado = false;
@@ -87,19 +109,19 @@ public class Main {
                 if(i == 7)
                     System.out.print("\t");
             }
-            System.out.print("[ " + letra + RESET + " ]");
+            System.out.print(GREEN + "[ " + letra + " ]\t" + RESET);
             System.out.println();
             if(j == 7)
                 System.out.println();
         }
         System.out.print("     \t");
         for(i = 0; i < 8; i++){
-            System.out.print("[ " + (i + 1) + RESET + " ]");
+            System.out.print(GREEN + "[ " + (i + 1) + " ]" + RESET);
         }
         System.out.println();
 
         System.out.println();
-        System.out.println("--------------------------------------------------------------");
+        System.out.println(GREEN + "--------------------------------------------------------------");
     }
 
     public static boolean verificarPosicao(List<Personagem> personagens, int linha, int coluna){
@@ -115,9 +137,8 @@ public class Main {
         }
 
         if(!verificado){
-            System.out.println("--------------------------------------------------------------");
-            System.out.println("- DUAS PEÇAS NÃO PODEM FICAR NA MESMA POSIÇÃO!               -");
-            System.out.println("--------------------------------------------------------------");
+            System.out.println(GREEN + "--------------------------------------------------------------");
+            System.out.println(GREEN + "- " + RED + "DUAS PEÇAS NÃO PODEM FICAR NA MESMA POSIÇÃO!" + GREEN + "               -");
         }
 
         return verificado;
@@ -136,17 +157,23 @@ public class Main {
         }
 
         if(!verificado){
-            System.out.println("--------------------------------------------------------------");
-            System.out.println("- DUAS PEÇAS NÃO PODEM FICAR NA MESMA POSIÇÃO!               -");
-            System.out.println("--------------------------------------------------------------");
+            System.out.println(GREEN + "--------------------------------------------------------------");
+            System.out.println(GREEN + "- " + RED + "DUAS PEÇAS NÃO PODEM FICAR NA MESMA POSIÇÃO!" + GREEN + "               -");
         }
 
         return verificado;
     }
 
-    public static boolean verificarRei(List<Personagem> personagens, List<Inimigo> inimigos, int pecas, int i, int linha, int coluna){
+    public static boolean verificarRei(List<Personagem> personagens, List<Inimigo> inimigos, int pecas, int i, int linha, int coluna, Peca p){
+        boolean verificado = false;
+
+        if((p.getposX() - linha) > 1 || (p.getposX() - linha) < -1 || (p.getposY() - coluna) > 1 || (p.getposY() - coluna) < -1){
+            verificado = false;
+        } else {
+            verificado = true;
+        }
         
-        Personagem p = personagens.get(i);
+        /*Personagem p = personagens.get(i);
         Inimigo in = inimigos.get(i);
 
         boolean verificado = false;
@@ -163,9 +190,7 @@ public class Main {
             } else {
                 verificado = true;
             }
-        }
-
-
+        }*/
 
         return verificado;
     }
@@ -682,6 +707,15 @@ public class Main {
     }
 
     public static boolean verificarRainha(List<Personagem> personagens, List<Inimigo> inimigos, int pecas, int i, int linha, int coluna){
+        // Peca p;
+        /*boolean verificado = false;
+
+        if(p.getposX() == linha || p.getposY() == coluna){
+            verificado = verificarTorre(personagens, inimigos, pecas, i, linha, coluna);
+        } else {
+            verificado = verificarBispo(personagens, inimigos, pecas, i, linha, coluna);
+        }*/
+
         Personagem p = personagens.get(i);
         Inimigo in = inimigos.get(i);
         boolean verificado = false;
@@ -704,6 +738,14 @@ public class Main {
         }
 
         return verificado;
+    }
+
+    public static void sleep(int milis) {
+        try {
+            Thread.sleep(milis);
+        } catch (InterruptedException e) {
+            // Handle the exception 
+        }
     }
 
     public static void main(String[] args){
@@ -779,13 +821,13 @@ public class Main {
 
                 imprimirTabuleiro(personagens, inimigos);
                 if(!personagens.get(0).getIcone().equals("♔")){
-                    System.out.println("- PEÇAS PRETAS VENCERAM!                                     -");
-                    System.out.println("--------------------------------------------------------------");
+                    System.out.println(GREEN + "- PEÇAS PRETAS VENCERAM!                                     -");
+                    System.out.println(GREEN + "--------------------------------------------------------------");
                     break;
                 }
                 if(!inimigos.get(0).getIcone().equals("♚")){
-                    System.out.println("- PEÇAS PRETAS VENCERAM!                                     -");
-                    System.out.println("--------------------------------------------------------------");
+                    System.out.println(GREEN + "- PEÇAS PRETAS VENCERAM!                                     -");
+                    System.out.println(GREEN + "--------------------------------------------------------------");
                     break;
                 }
                 // RETIRAR PARA FUNCIONAR NORMALMENTE
@@ -793,16 +835,16 @@ public class Main {
 
                 switch(pecas){
                     case 0:
-                        System.out.println("- RODADA DAS PEÇAS BRANCAS                                   -");
-                        System.out.println("--------------------------------------------------------------");
-                        System.out.println("- DIGITE 'SAIR' PARA FINALIZAR O JOGO                        -");
-                        System.out.print("- SELECIONE A PEÇA (A1 - H8): ");
+                        System.out.println(GREEN + "- RODADA DAS PEÇAS " + RED_BRIGHT + "BRANCAS" + GREEN + "                                   -");
+                        System.out.println(GREEN + "--------------------------------------------------------------");
+                        System.out.println(GREEN + "- DIGITE 'SAIR' PARA FINALIZAR O JOGO                        -");
+                        System.out.print(GREEN + "- SELECIONE A PEÇA (A1 - H8): ");
                         pecaSelecionada = input.nextLine();
 
                         if(pecaSelecionada.equalsIgnoreCase("SAIR")){
-                            System.out.println("--------------------------------------------------------------");
-                            System.out.println("- JOGO FINALIZADO SEM VENCEDORES                             -");
-                            System.out.println("--------------------------------------------------------------");
+                            System.out.println(GREEN + "--------------------------------------------------------------");
+                            System.out.println(GREEN + "- JOGO FINALIZADO SEM VENCEDORES                             -");
+                            System.out.println(GREEN + "--------------------------------------------------------------");
                             menu = false;
                             break;
                         }
@@ -810,15 +852,17 @@ public class Main {
                         // Se o tamanho da string for diferente de 2
                         // !Character.isLetter(pecaSelecionada.charAt(0)) --> Se o primeiro caracter não é uma letra entra pro input Ginválido
                         // !Character.isDigit(pecaSelecionada.charAt(1)) --> Se o segundo caracter não é um número entra pro input inválido
-                        if (pecaSelecionada.length() != 2 || !Character.isLetter(pecaSelecionada.charAt(0)) || !Character.isDigit(pecaSelecionada.charAt(1))) {
-                            System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
+                        if (pecaSelecionada.length() != 2 || !Character.isLetter(pecaSelecionada.charAt(0)) || !Character.isDigit(pecaSelecionada.charAt(1)) || pecaSelecionada.length() == 1) {
+                            System.out.println(GREEN + "- " + RED + "Input inválido. Insira um input válido entre 'A1' e 'H8'." + GREEN);
+                            pressToContinue(input);
                         } else {
                             cortado = pecaSelecionada.split("(?=\\d)");
                             caracterLinha = cortado[0].toUpperCase().charAt(0);
                             linha = caracterLinha - 65;
                             
                             if(linha < 0 || linha > 7){
-                                System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
+                                System.out.println(GREEN + "- " + RED + "Input inválido. Insira um input válido entre 'A1' e 'H8'." + GREEN);
+                                pressToContinue(input);
                                 break;
                             }
                             
@@ -826,7 +870,8 @@ public class Main {
                             coluna = caracterColuna - 49;
                             
                             if(coluna < 0 || coluna > 7){
-                                System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
+                                System.out.println(GREEN + "- " + RED + "Input inválido. Insira um input válido entre 'A1' e 'H8'." + GREEN);
+                                pressToContinue(input);
                                 break;
                             }
                             // A1 = linha[0] coluna[0]
@@ -840,24 +885,27 @@ public class Main {
                                 }
                             }
                             if(!branca){
-                                System.out.println("- Você selecionou uma peça preta! Selecione uma peça BRANCA!");
+                                System.out.println(GREEN + "- " + RED + "Você selecionou uma peça preta! Selecione uma peça BRANCA!" + GREEN + " -");
+                                pressToContinue(input);
                                 break;
                             } else {
                                 // Limitar movimentos das peças e verificar colisões ao movimentar !! PARTE MAIS DIFÍCIL DO DESAFIO !!
                                 // String iconePeca = personagens.get(i).getIcone();
                                 
                                 while(!verificado){
-                                    System.out.println("--------------------------------------------------------------");
-                                    System.out.println("- DIGITE 'VOLTAR' PARA SELECIONAR OUTRA PEÇA:                -");
-                                    System.out.print("- SELECIONE A PROXIMA POSIÇÃO DA PEÇA (A1 - H8): ");
+                                    System.out.println(GREEN + "--------------------------------------------------------------");
+                                    System.out.println(GREEN + "- DIGITE 'VOLTAR' PARA SELECIONAR OUTRA PEÇA:                -");
+                                    System.out.print(GREEN + "- SELECIONE A PROXIMA POSIÇÃO DA PEÇA (A1 - H8): ");
                                     proximaPosicao = input.nextLine();
 
                                     if(proximaPosicao.equalsIgnoreCase("VOLTAR")){
                                         break;
                                     } else {
 
-                                        if (!Character.isLetter(pecaSelecionada.charAt(0)) || !Character.isDigit(pecaSelecionada.charAt(1))) {
-                                            System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
+                                        if (!Character.isLetter(proximaPosicao.charAt(0)) || !Character.isDigit(proximaPosicao.charAt(1)) || proximaPosicao.length() == 1) {
+                                            System.out.println(GREEN + "- " + RED + "Input inválido. Insira um input válido entre 'A1' e 'H8'." + GREEN);
+                                            pressToContinue(input);
+                                            break;
                                         }
                                         
                                         cortado = proximaPosicao.split("(?=\\d)");
@@ -865,7 +913,8 @@ public class Main {
                                         linha = caracterLinha - 65;
    
                                         if(linha < 0 || linha > 7){
-                                            System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
+                                            System.out.println(GREEN + "- " + RED + "Input inválido. Insira um input válido entre 'A1' e 'H8'." + GREEN);
+                                            pressToContinue(input);
                                             break;
                                         }
                                         
@@ -873,7 +922,8 @@ public class Main {
                                         coluna = caracterColuna - 49;
                                         
                                         if(coluna < 0 || coluna > 7){
-                                            System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
+                                            System.out.println(GREEN + "- " + RED + "Input inválido. Insira um input válido entre 'A1' e 'H8'." + GREEN);
+                                            pressToContinue(input);
                                             break;
                                         }
    
@@ -892,7 +942,7 @@ public class Main {
                                         Personagem p = personagens.get(i);
                                         switch(icone){
                                             case '♔':
-                                                verificado = verificarRei(personagens, inimigos, pecas, i, linha, coluna);
+                                                verificado = verificarRei(personagens, inimigos, pecas, i, linha, coluna, p);
                                                 colisao = verificarPosicao(personagens, linha, coluna);
                                             break;
                     
@@ -973,18 +1023,20 @@ public class Main {
                                                 colisao = verificarPosicao(personagens, linha, coluna);
                                             break;
                                         }
-
-                                        if(!colisao)
+                                        if(!colisao){
+                                            pressToContinue(input);
                                             break;
+                                        }
             
                                         if(!verificado){
-                                            System.out.println("--------------------------------------------------------------");
-                                            System.out.println("- MOVIMENTO DE PEÇA INVÁLIDO!                                -");
-                                            System.out.println("--------------------------------------------------------------");
+                                            System.out.println(GREEN + "--------------------------------------------------------------");
+                                            System.out.println(GREEN + "- " + RED + "MOVIMENTO DE PEÇA INVÁLIDO!" + GREEN + "                                -");
+                                            pressToContinue(input);
                                             break;
                                         }
 
                                         if(verificado && !colisao){
+                                            pressToContinue(input);
                                             break;
                                         }
 
@@ -1000,6 +1052,9 @@ public class Main {
                                             personagens.get(i).setposX(linha);
                                             personagens.get(i).setposY(coluna);
                                             rodada++;
+
+                                            // Fazer os peões virarem ume peça aleatória ou somente a rainha quando chegar no final do tabuleiro
+                                            // if(p.getposX() )
                                             break;
                                             
                                         }
@@ -1010,16 +1065,16 @@ public class Main {
                     break;
 
                     case 1:
-                        System.out.println("- RODADA DAS PEÇAS PRETAS                                   -");
-                        System.out.println("--------------------------------------------------------------");
-                        System.out.println("- DIGITE 'SAIR' PARA FINALIZAR O JOGO                        -");
-                        System.out.print("- SELECIONE A PEÇA (A1 - H8): ");
+                        System.out.println(GREEN + "- RODADA DAS PEÇAS " + CYAN + "PRETAS" + GREEN + "                                   -");
+                        System.out.println(GREEN + "--------------------------------------------------------------");
+                        System.out.println(GREEN + "- DIGITE 'SAIR' PARA FINALIZAR O JOGO                        -");
+                        System.out.print(GREEN + "- SELECIONE A PEÇA (A1 - H8): ");
                         pecaSelecionada = input.nextLine();
 
                         if(pecaSelecionada.equalsIgnoreCase("SAIR")){
-                            System.out.println("--------------------------------------------------------------");
-                            System.out.println("- JOGO FINALIZADO SEM VENCEDORES                             -");
-                            System.out.println("--------------------------------------------------------------");
+                            System.out.println(GREEN + "--------------------------------------------------------------");
+                            System.out.println(GREEN + "- JOGO FINALIZADO SEM VENCEDORES                             -");
+                            System.out.println(GREEN + "--------------------------------------------------------------");
                             menu = false;
                             break;
                         }
@@ -1027,15 +1082,17 @@ public class Main {
                         // Se o tamanho da string for diferente de 2
                         // !Character.isLetter(pecaSelecionada.charAt(0)) --> Se o primeiro caracter não é uma letra entra pro input inválido
                         // !Character.isDigit(pecaSelecionada.charAt(1)) --> Se o segundo caracter não é um número entra pro input inválido
-                        if (pecaSelecionada.length() != 2 || !Character.isLetter(pecaSelecionada.charAt(0)) || !Character.isDigit(pecaSelecionada.charAt(1))) {
-                            System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
+                        if (pecaSelecionada.length() != 2 || !Character.isLetter(pecaSelecionada.charAt(0)) || !Character.isDigit(pecaSelecionada.charAt(1)) || pecaSelecionada.length() == 1) {
+                            System.out.println(GREEN + "- " + RED + "Input inválido. Insira um input válido entre 'A1' e 'H8'." + GREEN);
+                            pressToContinue(input);
                         } else {
                             cortado = pecaSelecionada.split("(?=\\d)");
                             caracterLinha = cortado[0].toUpperCase().charAt(0);
                             linha = caracterLinha - 65;
                             
                             if(linha < 0 || linha > 7){
-                                System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
+                                System.out.println(GREEN + "- " + RED + "Input inválido. Insira um input válido entre 'A1' e 'H8'." + GREEN);
+                                pressToContinue(input);
                                 break;
                             }
                             
@@ -1043,7 +1100,8 @@ public class Main {
                             coluna = caracterColuna - 49;
                             
                             if(coluna < 0 || coluna > 7){
-                                System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
+                                System.out.println(GREEN + "- " + RED + "Input inválido. Insira um input válido entre 'A1' e 'H8'." + GREEN);
+                                pressToContinue(input);
                                 break;
                             }
                             // A1 = linha[0] coluna[0]
@@ -1057,26 +1115,34 @@ public class Main {
                                 }
                             }
                             if(!preta){
-                                System.out.println("- Você selecionou uma peça branca! Selecione uma peça PRETA!");
+                                System.out.println(GREEN + "- " + RED + "Você selecionou uma peça branca! Selecione uma peça PRETA!" + GREEN + " -");
+                                pressToContinue(input);
                                 break;
                             } else {
 
                                 while(!verificado){
-                                    System.out.println("--------------------------------------------------------------");
-                                    System.out.println("- DIGITE 'VOLTAR' PARA SELECIONAR OUTRA PEÇA:                -");
-                                    System.out.print("- SELECIONE A PROXIMA POSIÇÃO DA PEÇA (A1 - H8): ");
+                                    System.out.println(GREEN + "--------------------------------------------------------------");
+                                    System.out.println(GREEN + "- DIGITE 'VOLTAR' PARA SELECIONAR OUTRA PEÇA:                -");
+                                    System.out.print(GREEN + "- SELECIONE A PROXIMA POSIÇÃO DA PEÇA (A1 - H8): ");
                                     proximaPosicao = input.nextLine();
 
                                     if(proximaPosicao.equalsIgnoreCase("VOLTAR")){
                                         break;
                                     } else {
+
+                                        if (proximaPosicao.length() != 2 || !Character.isLetter(proximaPosicao.charAt(0)) || !Character.isDigit(proximaPosicao.charAt(1)) || proximaPosicao.length() == 1){
+                                            System.out.println(GREEN + "- " + RED + "Input inválido. Insira um input válido entre 'A1' e 'H8'." + GREEN);
+                                            pressToContinue(input);
+                                            break;
+                                        }
    
                                         cortado = proximaPosicao.split("(?=\\d)");
                                         caracterLinha = cortado[0].toUpperCase().charAt(0);
                                         linha = caracterLinha - 65;
    
                                         if(linha < 0 || linha > 7){
-                                            System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
+                                            System.out.println(GREEN + "- " + RED + "Input inválido. Insira um input válido entre 'A1' e 'H8'." + GREEN);
+                                            pressToContinue(input);
                                             break;
                                         }
                                         
@@ -1084,7 +1150,8 @@ public class Main {
                                         coluna = caracterColuna - 49;
                                         
                                         if(coluna < 0 || coluna > 7){
-                                            System.out.println("- Input inválido. Insira um input válido entre 'A1' e 'H8'.");
+                                            System.out.println(GREEN + "- " + RED + "Input inválido. Insira um input válido entre 'A1' e 'H8'." + GREEN);
+                                            pressToContinue(input);
                                             break;
                                         }
 
@@ -1096,7 +1163,7 @@ public class Main {
                                         Inimigo in = inimigos.get(i);
                                         switch(icone){
                                             case '♚':
-                                                verificado = verificarRei(personagens, inimigos, pecas, i, linha, coluna);
+                                                verificado = verificarRei(personagens, inimigos, pecas, i, linha, coluna, in);
                                                 colisao = verificarInimigo(inimigos, linha, coluna);
                                             break;
 
@@ -1177,17 +1244,20 @@ public class Main {
                                             break;
                                             }
                                             
-                                            if(!colisao)
-                                                break;
-                                            
-                                            if(!verificado){
-                                                System.out.println("--------------------------------------------------------------");
-                                                System.out.println("- MOVIMENTO DE PEÇA INVÁLIDO!                                -");
-                                                System.out.println("--------------------------------------------------------------");
-                                                break;
-                                            }
-
+                                        if(!colisao){
+                                            pressToContinue(input);
+                                            break;
+                                        }
+                
+                                        if(!verificado){
+                                            System.out.println(GREEN + "--------------------------------------------------------------");
+                                            System.out.println(GREEN + "- " + RED + "MOVIMENTO DE PEÇA INVÁLIDO!" + GREEN + "                                -");
+                                            pressToContinue(input);
+                                            break;
+                                        }
+    
                                         if(verificado && !colisao){
+                                            pressToContinue(input);
                                             break;
                                         }
 
