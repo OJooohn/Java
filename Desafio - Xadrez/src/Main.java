@@ -16,10 +16,10 @@ public class Main {
 
     // Está em ordem nas configurações
     // Black: B16E41 both
+    // Bright Red: FFD599 both
     // Cyan: B16E41 both
     // Green: FFFFFF both
     // White (gray): FFD599 both
-    // Bright Red: FFD599 both
 
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset
