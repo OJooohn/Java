@@ -25,8 +25,6 @@ public class Main {
     public static final String RESET = "\033[0m";  // Text Reset
 
     // Regular Colors
-    public static final String BLACK = "\033[0;30m";   // BLACK
-    public static final String WHITE = "\033[0;37m";   // WHITE
     public static final String RED = "\033[0;31m";     // RED --> errors
     public static final String BLUE = "\033[0;34m";    // BLUE --> press to continue
 
@@ -164,19 +162,18 @@ public class Main {
         return verificado;
     }
 
-    public static boolean verificarRei(List<Personagem> personagens, List<Inimigo> inimigos, int pecas, int i, int linha, int coluna, Peca p){
-        boolean verificado = false;
+    public static boolean verificarRei(int linha, int coluna, Peca p){
 
+        //if((p.getposX() - linha) > 1 || (p.getposX() - linha) < -1 || (p.getposY() - coluna) > 1 || (p.getposY() - coluna) < -1){
+        //return p.getposX() - linha > 1 || p.getposX() - linha < -1 || p.getposY() - coluna > 1 || p.getposY() - coluna < -1;
         if((p.getposX() - linha) > 1 || (p.getposX() - linha) < -1 || (p.getposY() - coluna) > 1 || (p.getposY() - coluna) < -1){
-            verificado = false;
+            return false;
         } else {
-            verificado = true;
+            return true;
         }
-
-        return verificado;
     }
 
-    public static boolean verificarTorre(List<Personagem> personagens, List<Inimigo> inimigos, int pecas, int i, int linha, int coluna, Peca p){
+    public static boolean verificarTorre(List<Personagem> personagens, List<Inimigo> inimigos, int linha, int coluna, Peca p){
         int j;
 
         boolean verificado = false;
@@ -264,12 +261,8 @@ public class Main {
                             
                         }
                     }
-                } else {
-                    verificado = false;
                 }
             }
-        } else {
-            verificado = false;
         }
         
         if(!colPers && !colIni){
@@ -279,23 +272,15 @@ public class Main {
         return verificado;
     }
     
-    public static boolean verificarCavalo(List<Personagem> personagens, List<Inimigo> inimigos, int pecas, int i, int linha, int coluna, Peca p){
+    public static boolean verificarCavalo(int linha, int coluna, Peca p){
 
-        boolean verificado = false;
+        boolean verificado;
 
         if(p.getposX() - linha == -2 || p.getposX() - linha == 2){
-            if(p.getposY() - coluna == 1 || p.getposY() - coluna == -1){
-                verificado = true;
-            } else {
-                verificado = false;
-            }
+            verificado = p.getposY() - coluna == 1 || p.getposY() - coluna == -1;
         } else {
             if(p.getposY() - coluna == -2 || p.getposY() - coluna == 2){
-                if(p.getposX() - linha == 1 || p.getposX() - linha == -1){
-                    verificado = true;
-                } else {
-                    verificado = false;
-                }
+                verificado = p.getposX() - linha == 1 || p.getposX() - linha == -1;
             } else {
                 verificado = false;
             }
@@ -305,14 +290,14 @@ public class Main {
         return verificado;
     }
 
-    public static boolean verificarBispo(List<Personagem> personagens, List<Inimigo> inimigos, int pecas, int i, int linha, int coluna, Peca p){
+    public static boolean verificarBispo(List<Personagem> personagens, List<Inimigo> inimigos, int pecas, int linha, int coluna, Peca p){
 
         boolean verificado = false;
         int deltaX, deltaY;
 
         boolean Xnegativo = false, Ynegativo = false;
 
-        int j, aux = 0;
+        int j, aux;
 
         deltaX = p.getposX() - linha;
         deltaY = p.getposY() - coluna;
@@ -545,9 +530,9 @@ public class Main {
         boolean verificado = false;
 
         if(p.getposX() == linha || p.getposY() == coluna){
-            verificado = verificarTorre(personagens, inimigos, pecas, i, linha, coluna, p);
+            verificado = verificarTorre(personagens, inimigos,  linha, coluna, p);
         } else {
-            verificado = verificarBispo(personagens, inimigos, pecas, i, linha, coluna, p);
+            verificado = verificarBispo(personagens, inimigos, pecas, linha, coluna, p);
         }
 
         return verificado;
@@ -644,7 +629,7 @@ public class Main {
                     break;
                 }
                 // RETIRAR PARA FUNCIONAR NORMALMENTE
-                // pecas = 0;
+                pecas = 0;
 
                 switch(pecas){
                     case 0:
@@ -755,7 +740,7 @@ public class Main {
                                         Personagem p = personagens.get(i);
                                         switch(icone){
                                             case '♔':
-                                                verificado = verificarRei(personagens, inimigos, pecas, i, linha, coluna, p);
+                                                verificado = verificarRei(linha, coluna, p);
                                                 colisao = verificarPosicao(personagens, linha, coluna);
                                             break;
                     
@@ -822,17 +807,17 @@ public class Main {
                                             break;
                     
                                             case '♖':
-                                                verificado = verificarTorre(personagens, inimigos, pecas, i, linha, coluna, p);
+                                                verificado = verificarTorre(personagens, inimigos, linha, coluna, p);
                                                 colisao = verificarPosicao(personagens, linha, coluna);
                                             break;
                                                 
                                             case '♘':
-                                                verificado = verificarCavalo(personagens, inimigos, pecas, i, linha, coluna, p);
+                                                verificado = verificarCavalo(linha, coluna, p);
                                                 colisao = verificarPosicao(personagens, linha, coluna);
                                             break;
                                                 
                                             case '♗':
-                                                verificado = verificarBispo(personagens, inimigos, pecas, i, linha, coluna, p);
+                                                verificado = verificarBispo(personagens, inimigos, pecas, linha, coluna, p);
                                                 colisao = verificarPosicao(personagens, linha, coluna);
                                             break;
                                                 
@@ -977,7 +962,7 @@ public class Main {
                                         Inimigo in = inimigos.get(i);
                                         switch(icone){
                                             case '♚':
-                                                verificado = verificarRei(personagens, inimigos, pecas, i, linha, coluna, in);
+                                                verificado = verificarRei(linha, coluna, in);
                                                 colisao = verificarInimigo(inimigos, linha, coluna);
                                             break;
 
@@ -1043,17 +1028,17 @@ public class Main {
                                             break;
 
                                             case '♜':
-                                                verificado = verificarTorre(personagens, inimigos, pecas, i, linha, coluna, in);
+                                                verificado = verificarTorre(personagens, inimigos, linha, coluna, in);
                                                 colisao = verificarInimigo(inimigos, linha, coluna);
                                             break;
                                                 
                                             case '♞':
-                                                verificado = verificarCavalo(personagens, inimigos, pecas, i, linha, coluna, in);
+                                                verificado = verificarCavalo(linha, coluna, in);
                                                 colisao = verificarInimigo(inimigos, linha, coluna);
                                             break;
                                                 
                                             case '♝':
-                                                verificado = verificarBispo(personagens, inimigos, pecas, i, linha, coluna, in);
+                                                verificado = verificarBispo(personagens, inimigos, pecas, linha, coluna, in);
                                                 colisao = verificarInimigo(inimigos, linha, coluna);
                                             break;
 
