@@ -59,7 +59,7 @@ public class Main {
         }
     }
 
-    public static void imprimirTabuleiro(List<Personagem> personagens, List<Inimigo> inimigos) {
+    public static void imprimirTabuleiro(List<Peca> pecas) {
         // BRANCAS: ♔ ♙ ♖ ♘ ♗ ♕
         // PRETAS: ♚ ♟ ♜ ♞ ♝ ♛
         int i;
@@ -87,25 +87,23 @@ public class Main {
         System.out.println();
 
         for (int j = 0; j < 8; j++, letra++) {
+
             System.out.print(GREEN + "[ " + letra + " ]\t" + RESET);
+
             for (i = 0; i < 8; i++) {
                 printBackground(i, j);
                 boolean encontrado = false;
-                for (Personagem p : personagens) {
+
+                for (Peca p : pecas) {
 
                     if (p.getposX() == j && p.getposY() == i) {
                         System.out.print("[ " + p.getIcone() + " ]" + RESET);
                         encontrado = true;
                         break;
                     }
+
                 }
-                for (Inimigo I : inimigos) {
-                    if (I.getposX() == j && I.getposY() == i) {
-                        System.out.print("[ " + I.getIcone() + " ]" + RESET);
-                        encontrado = true;
-                        break;
-                    }
-                }
+
                 if (!encontrado)
                     System.out.print("[   ]" + RESET);
 
@@ -731,59 +729,59 @@ public class Main {
     public static void main(String[] args) {
 
         try (Scanner input = new Scanner(System.in)) {
-            Tabuleiro tabuleiro = new Tabuleiro(8, 8);
-            List<Personagem> personagens = new ArrayList<>();
-            List<Inimigo> inimigos = new ArrayList<>();
+            List<Peca> pecas = new ArrayList<Peca>();
 
             int i, j, rodada = 0;
 
-            // Peças Brancas
             // Rei --> Rei como posição 0 para verificar o ganhador do jogo
-            personagens.add(new Personagem("♔", 7, 4));
+            pecas.add(new Rei("♔", 7, 4, true, false));
+
+            // Rei --> Rei como posição 0 para verificar o ganhador do jogo
+            pecas.add(new Rei("♚", 0, 4, false, true));
+
+            // Peças Brancas
 
             // Peões
-            for (i = 0; i < tabuleiro.getColunas(); i++) {
+            for (i = 0; i < 8; i++) {
                 // personagens.add(new Personagem("♙" , 6, i));
-                personagens.add(new Personagem("♙", 6, i));
+                pecas.add(new Peao("♙", 6, i, true, false));
             }
 
             // Torres
-            personagens.add(new Personagem("♖", 7, 0));
-            personagens.add(new Personagem("♖", 7, 7));
+            pecas.add(new Torre("♖", 7, 0, true, false));
+            pecas.add(new Torre("♖", 7, 7, true, false));
 
             // Cavalos
-            personagens.add(new Personagem("♘", 7, 1));
-            personagens.add(new Personagem("♘", 7, 6));
+            pecas.add(new Cavalo("♘", 7, 1, true, false));
+            pecas.add(new Cavalo("♘", 7, 6, true, false));
 
             // Bispos
-            personagens.add(new Personagem("♗", 7, 2));
-            personagens.add(new Personagem("♗", 7, 5));
+            pecas.add(new Bispo("♗", 7, 2, true, false));
+            pecas.add(new Bispo("♗", 7, 5, true, false));
             // Rainha
-            personagens.add(new Personagem("♕", 7, 3));
+            pecas.add(new Rainha("♕", 7, 3, true, false));
 
             // Peças Pretas
-            // Rei --> Rei como posição 0 para verificar o ganhador do jogo
-            inimigos.add(new Inimigo("♚", 0, 4));
 
             // Peões
-            for (i = 0; i < tabuleiro.getColunas(); i++) {
-                inimigos.add(new Inimigo("♟", 1, i));
+            for (i = 0; i < 8; i++) {
+                pecas.add(new Peao("♟", 1, i, false, true));
             }
 
             // Torres
-            inimigos.add(new Inimigo("♜", 0, 0));
-            inimigos.add(new Inimigo("♜", 0, 7));
+            pecas.add(new Torre("♜", 0, 0, false, true));
+            pecas.add(new Torre("♜", 0, 7, false, true));
 
             // Cavalos
-            inimigos.add(new Inimigo("♞", 0, 1));
-            inimigos.add(new Inimigo("♞", 0, 6));
+            pecas.add(new Cavalo("♞", 0, 1, false, true));
+            pecas.add(new Cavalo("♞", 0, 6, false, true));
 
             // Bispos
-            inimigos.add(new Inimigo("♝", 0, 2));
-            inimigos.add(new Inimigo("♝", 0, 5));
+            pecas.add(new Bispo("♝", 0, 2, false, true));
+            pecas.add(new Bispo("♝", 0, 5, false, true));
 
             // Rainha
-            inimigos.add(new Inimigo("♛", 0, 3));
+            pecas.add(new Rainha("♛", 0, 3, false, true));
 
             boolean menu = true;
             boolean castling = false;
@@ -792,20 +790,20 @@ public class Main {
 
             while (menu) {
 
-                int pecas = rodada % 2;
+                int peca = rodada % 2;
                 int linha, coluna;
                 char caracterLinha, caracterColuna, icone;
                 String pecaSelecionada, proximaPosicao;
                 String[] cortado;
                 boolean verificado = false, colisao;
 
-                imprimirTabuleiro(personagens, inimigos);
-                if (!personagens.get(0).getIcone().equals("♔")) {
+                imprimirTabuleiro(pecas);
+                if (!pecas.get(0).getIcone().equals("♔")) {
                     System.out.println(GREEN + "- PEÇAS PRETAS VENCERAM!                                     -");
                     System.out.println(GREEN + "--------------------------------------------------------------");
                     break;
                 }
-                if (!inimigos.get(0).getIcone().equals("♚")) {
+                if (!pecas.get(1).getIcone().equals("♚")) {
                     System.out.println(GREEN + "- PEÇAS PRETAS VENCERAM!                                     -");
                     System.out.println(GREEN + "--------------------------------------------------------------");
                     break;
@@ -813,7 +811,7 @@ public class Main {
                 // RETIRAR PARA FUNCIONAR NORMALMENTE
                 // pecas = 0;
 
-                switch (pecas) {
+                switch (peca) {
                     case 0:
                         System.out.println(GREEN + "- RODADA DAS PEÇAS " + RED_BRIGHT + "BRANCAS" + GREEN
                                 + "                                   -");
@@ -867,9 +865,10 @@ public class Main {
                             // A1 = linha[0] coluna[0]
 
                             boolean branca = false;
-                            for (i = 0; i < personagens.size(); i++) {
-                                Personagem p = personagens.get(i);
-                                if (p.getposX() == linha && p.getposY() == coluna) {
+
+                            for (i = 0; i < pecas.size(); i++) {
+                                Peca p = pecas.get(i);
+                                if (p.getposX() == linha && p.getposY() == coluna && p.getIsWhite()) {
                                     branca = true;
                                     break;
                                 }
@@ -885,7 +884,8 @@ public class Main {
                                 // String iconePeca = personagens.get(i).getIcone();
 
                                 do {
-                                    icone = personagens.get(i).getIcone().charAt(0);
+                                    icone = pecas.get(i).getIcone().charAt(0);
+
                                     System.out.println(
                                             GREEN + "--------------------------------------------------------------");
                                     System.out.println(GREEN + "- PECA SELECIONADA: " + icone
@@ -934,112 +934,12 @@ public class Main {
                                             break;
                                         }
 
-                                        Personagem p = personagens.get(i);
-                                        castling = false;
-
-                                        switch (icone) {
-                                            case '♔':
-                                                castling = verificarCastling(p, linha, coluna, personagens, inimigos,
-                                                        pecas);
-                                                if (castling) {
-                                                    verificado = true;
-                                                    System.out.println(GREEN
-                                                            + "--------------------------------------------------------------");
-                                                    System.out.println(GREEN
-                                                            + "- ROQUE REALIZADO COM SUCESSO!                               -");
-                                                    System.out.println(GREEN
-                                                            + "--------------------------------------------------------------");
-                                                } else {
-                                                    verificado = verificarRei(linha, coluna, p);
-                                                }
-                                                break;
-
-                                            case '♙':
-                                                boolean diagonal = false;
-
-                                                for (j = 0; j < inimigos.size(); j++) {
-                                                    Inimigo I = inimigos.get(j);
-                                                    if (I.getposX() + 1 == p.getposX()
-                                                            && I.getposY() - 1 == p.getposY()) {
-                                                        diagonal = true;
-                                                        break;
-                                                    }
-                                                    if (I.getposX() + 1 == p.getposX()
-                                                            && I.getposY() + 1 == p.getposY()) {
-                                                        diagonal = true;
-                                                        break;
-                                                    }
-                                                }
-
-                                                boolean inimigoFrente = false;
-
-                                                for (j = 0; j < inimigos.size(); j++) {
-                                                    Inimigo I = inimigos.get(j);
-                                                    if (I.getposY() == p.getposY() && I.getposX() == linha) {
-                                                        inimigoFrente = true;
-                                                        break;
-                                                    }
-                                                }
-
-                                                if (p.getposX() - linha <= -1) {
-                                                    break;
-                                                }
-
-                                                if (p.getposX() == 6) {
-                                                    if (p.getposX() - linha <= 2 && p.getposY() == coluna) {
-
-                                                        verificado = true;
-
-                                                    } else {
-                                                        if (p.getposY() == coluna && p.getposX() - linha == 1)
-                                                            verificado = true;
-                                                    }
-                                                } else {
-                                                    if (p.getposX() < linha || (p.getposX() - linha) <= 0
-                                                            || (p.getposX() - linha) > 1
-                                                            || (p.getposY() != coluna && !diagonal)) {
-                                                        break;
-                                                    } else {
-                                                        verificado = true;
-                                                    }
-                                                }
-
-                                                if (inimigoFrente) {
-                                                    if (p.getposY() == coluna && p.getposX() - 1 == linha) {
-                                                        break;
-                                                    }
-                                                }
-
-                                                if (verificado && linha == 0) {
-                                                    p.setIcone(promocaoPeao(input, pecas));
-                                                }
-
-                                                break;
-
-                                            case '♖':
-                                                verificado = verificarTorre(personagens, inimigos, linha, coluna, p);
-                                                break;
-
-                                            case '♘':
-                                                verificado = verificarCavalo(linha, coluna, p);
-                                                break;
-
-                                            case '♗':
-                                                verificado = verificarBispo(personagens, inimigos, pecas, linha, coluna,
-                                                        p);
-                                                break;
-
-                                            case '♕':
-                                                verificado = verificarRainha(personagens, inimigos, pecas, linha,
-                                                        coluna, p);
-                                                break;
+                                        for (Peca p : pecas) {
+                                            if(p.getposX() == linha && p.getposY() == coluna) {
+                                                p.movimentarPeca();
+                                            }
                                         }
 
-                                        if (castling) {
-                                            colisao = true;
-                                        } else {
-                                            colisao = verificarPosicao(personagens, linha, coluna);
-                                        }
 
                                         if (!verificado) {
                                             System.out.println(GREEN
