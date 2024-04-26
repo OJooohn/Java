@@ -147,6 +147,26 @@ public class Main {
         return verificado;
     }
 
+    public static boolean verificarInimigo(List<Inimigo> inimigos, int linha, int coluna){
+        boolean verificado = false;
+        for(Inimigo i : inimigos){
+            if(i.getposX() == linha && i.getposY() == coluna){
+                // System.out.println("Peca = " + p.getIcone() + " | X = " + p.getposX() + " | Y = " + p.getposY());
+                verificado = false;
+                break;
+            } else {
+                verificado = true;
+            }
+        }
+
+        if(!verificado){
+            System.out.println(GREEN + "--------------------------------------------------------------");
+            System.out.println(GREEN + "- " + RED + "DUAS PEÇAS NÃO PODEM FICAR NA MESMA POSIÇÃO!" + GREEN + "               -");
+        }
+
+        return verificado;
+    }
+
     public static boolean verificarCastling(Peca p, int linha, int coluna, List<Personagem> personagens,
             List<Inimigo> inimigos, int pecas) {
 
@@ -287,6 +307,59 @@ public class Main {
         }
 
         return false;
+    }
+
+    public static String promocaoPeao(Scanner input, int pecas) {
+
+        String icone = " ";
+        int opcao = 0;
+
+        
+        do {
+            System.out.println(GREEN + "--------------------------------------------------------------");
+            System.out.println(GREEN + "- [1] TORRE  ♖ | ♜                                         -");        
+            System.out.println(GREEN + "- [2] CAVALO ♘ | ♞                                         -");        
+            System.out.println(GREEN + "- [3] BISPO  ♗ | ♝                                         -");        
+            System.out.println(GREEN + "- [4] RAINHA ♕ | ♛                                         -"); 
+            System.out.print("- SELECIONE A PEÇA: ");
+            opcao = Integer.parseInt(input.nextLine());
+            
+            switch (opcao) {
+                case 1:
+                    if(pecas == 0)
+                        return "♖";
+                    else
+                        return "♜";
+                
+                case 2:
+                    if(pecas == 0)
+                        return "♘";
+                    else
+                        return "♞";
+                
+                case 3:
+                    if(pecas == 0)
+                        return "♗";
+                    else
+                        return "♝";
+                
+                case 4:
+                    if(pecas == 0)
+                        return "♕";
+                    else
+                        return "♛";
+                
+                default: 
+                    System.out.println(GREEN + "--------------------------------------------------------------");
+                    System.out.println(GREEN + "- " + RED + "PEÇA SELECIONA INVÁLIDA! " + BLUE + "DIGITE NOVEMENTE...               -");
+                    pressToContinue(input);
+                break;
+            }   
+
+        } while (opcao >= 0 && opcao <= 4);
+
+        return icone;
+
     }
 
     public static boolean verificarRei(int linha, int coluna, Peca p) {
@@ -812,6 +885,12 @@ public class Main {
                                 // String iconePeca = personagens.get(i).getIcone();
 
                                 do {
+                                    icone = personagens.get(i).getIcone().charAt(0);
+                                    System.out.println(
+                                            GREEN + "--------------------------------------------------------------");
+                                    System.out.println(GREEN + "- PECA SELECIONADA: " + icone
+                                            + "                                        -");
+
                                     System.out.println(
                                             GREEN + "--------------------------------------------------------------");
                                     System.out.println(
@@ -854,8 +933,6 @@ public class Main {
                                             pressToContinue(input);
                                             break;
                                         }
-
-                                        icone = personagens.get(i).getIcone().charAt(0);
 
                                         Personagem p = personagens.get(i);
                                         castling = false;
@@ -932,6 +1009,11 @@ public class Main {
                                                         break;
                                                     }
                                                 }
+
+                                                if (verificado && linha == 0) {
+                                                    p.setIcone(promocaoPeao(input, pecas));
+                                                }
+
                                                 break;
 
                                             case '♖':
@@ -1063,6 +1145,12 @@ public class Main {
                             } else {
 
                                 do {
+                                    icone = inimigos.get(i).getIcone().charAt(0);
+                                    System.out.println(
+                                            GREEN + "--------------------------------------------------------------");
+                                    System.out.println(GREEN + "- PECA SELECIONADA: " + icone
+                                            + "                                        -");
+
                                     System.out.println(
                                             GREEN + "--------------------------------------------------------------");
                                     System.out.println(
@@ -1106,8 +1194,6 @@ public class Main {
                                             pressToContinue(input);
                                             break;
                                         }
-
-                                        icone = inimigos.get(i).getIcone().charAt(0);
 
                                         Inimigo in = inimigos.get(i);
                                         switch (icone) {
@@ -1181,6 +1267,10 @@ public class Main {
                                                         break;
                                                     }
                                                 }
+
+                                                if (verificado && linha == 7) {
+                                                    in.setIcone(promocaoPeao(input, pecas));
+                                                }
                                                 break;
 
                                             case '♜':
@@ -1205,7 +1295,7 @@ public class Main {
                                         if (castling) {
                                             colisao = true;
                                         } else {
-                                            colisao = verificarPosicao(personagens, linha, coluna);
+                                            colisao = verificarInimigo(inimigos, linha, coluna);
                                         }
 
                                         if (!verificado) {
