@@ -147,30 +147,10 @@ public class Main {
         return verificado;
     }
 
-    public static boolean verificarInimigo(List<Inimigo> inimigos, int linha, int coluna) {
-        boolean verificado = false;
-        for (Inimigo i : inimigos) {
-            if (i.getposX() == linha && i.getposY() == coluna) {
-                verificado = false;
-                break;
-            } else {
-                verificado = true;
-            }
-        }
-
-        if (!verificado) {
-            System.out.println(GREEN + "--------------------------------------------------------------");
-            System.out.println(
-                    GREEN + "- " + RED + "DUAS PEÇAS NÃO PODEM FICAR NA MESMA POSIÇÃO!" + GREEN + "               -");
-        }
-
-        return verificado;
-    }
-
     public static boolean verificarCastling(Peca p, int linha, int coluna, List<Personagem> personagens,
             List<Inimigo> inimigos, int pecas) {
 
-        boolean torreDireita = false, torreEsquerda = false, castling = false;
+        boolean torreDireita = false, torreEsquerda = false, castling;
         int indiceTorre;
 
         int Xd, Yd, Xe, Ye;
@@ -197,12 +177,10 @@ public class Main {
                             if ((pers.getposX() == linha && pers.getposY() == coluna)
                                     && (linha == Xd && coluna == Yd)) {
                                 torreDireita = true;
-                                torreEsquerda = false;
                                 break;
                             }
                             if ((pers.getposX() == linha && pers.getposY() == coluna)
                                     && (linha == Xe && coluna == Ye)) {
-                                torreDireita = false;
                                 torreEsquerda = true;
                                 break;
                             }
@@ -215,11 +193,9 @@ public class Main {
                         if (ini.getMovimentos() == 0 && ini.getIcone().equals("♜")) {
                             if ((ini.getposX() == linha && ini.getposY() == coluna) && (linha == Xd && coluna == Yd)) {
                                 torreDireita = true;
-                                torreEsquerda = false;
                                 break;
                             }
                             if ((ini.getposX() == linha && ini.getposY() == coluna) && (linha == Xe && coluna == Ye)) {
-                                torreDireita = false;
                                 torreEsquerda = true;
                                 break;
                             }
@@ -250,8 +226,6 @@ public class Main {
 
                         p.setposY(6);
                         personagens.get(indiceTorre).setposY(5);
-
-                        castling = true;
                     } else {
 
                         for (i = p.getposY(); i < 7; i++) {
@@ -290,8 +264,6 @@ public class Main {
 
                         p.setposY(2);
                         personagens.get(indiceTorre).setposY(3);
-
-                        castling = true;
                     } else {
 
                         for (i = p.getposY(); i > 0; i--) {
@@ -307,8 +279,6 @@ public class Main {
 
                         p.setposY(2);
                         inimigos.get(indiceTorre).setposY(3);
-
-                        castling = true;
                     }
                     return true;
                 }
@@ -319,8 +289,7 @@ public class Main {
         return false;
     }
 
-    public static boolean verificarRei(int linha, int coluna, Peca p, List<Personagem> personagens,
-            List<Inimigo> inimigos, int pecas, boolean castling) {
+    public static boolean verificarRei(int linha, int coluna, Peca p) {
 
         return (p.getposX() - linha) <= 1 && (p.getposX() - linha) >= -1 && (p.getposY() - coluna) <= 1
                 && (p.getposY() - coluna) >= -1;
@@ -904,8 +873,7 @@ public class Main {
                                                     System.out.println(GREEN
                                                             + "--------------------------------------------------------------");
                                                 } else {
-                                                    verificado = verificarRei(linha, coluna, p, personagens, inimigos,
-                                                            pecas, castling);
+                                                    verificado = verificarRei(linha, coluna, p);
                                                 }
                                                 break;
 
@@ -1155,8 +1123,7 @@ public class Main {
                                                     System.out.println(GREEN
                                                             + "--------------------------------------------------------------");
                                                 } else {
-                                                    verificado = verificarRei(linha, coluna, in, personagens, inimigos,
-                                                            pecas, castling);
+                                                    verificado = verificarRei(linha, coluna, in);
                                                 }
                                                 break;
 
