@@ -18,6 +18,8 @@ public class Desafio1 {
 
         System.out.println("Você nasceu no dia " + dia + " de " + mes + " de " + ano + ", correto? ");
 
+        leitor.close();
+
     }
     
 }

@@ -34,6 +34,8 @@ public class OlaMundo {
         int idade = 2024 - ano;
 
         System.out.println("Será que vc tem " + idade + " anos então?");
+
+        leitor.close();
     }
   
 }

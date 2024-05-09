@@ -15,6 +15,8 @@ public class Desafio2 {
     int soma = num1 + num2;
 
     System.out.print("A soma é " + soma);
+
+    input.close();
   }
 
 }
