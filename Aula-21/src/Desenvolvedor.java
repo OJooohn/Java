@@ -36,5 +36,13 @@ public class Desenvolvedor extends Funcionario implements Trabalhavel{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'relatarProgresso'");
     }
+
+    @Override
+    public String toString() {
+        return 
+        "Desenvolvedor" +
+        "\nNome: " + this.getNome() +
+        "\nMatricula: " + this.getMatricula();
+    }
     
 }

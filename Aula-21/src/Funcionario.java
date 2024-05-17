@@ -18,4 +18,9 @@ public abstract class Funcionario {
 
     public abstract float calcularSalario();
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
 }

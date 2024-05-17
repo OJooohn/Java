@@ -34,5 +34,13 @@ public class Gerente extends Funcionario implements Trabalhavel{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'relatarProgresso'");
     }
+
+    @Override
+    public String toString() {
+        return 
+        "Gerente" +
+        "\nNome: " + this.getNome() +
+        "\nMatricula: " + this.getMatricula();
+    }
     
 }

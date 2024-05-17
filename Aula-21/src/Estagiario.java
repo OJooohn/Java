@@ -35,4 +35,12 @@ public class Estagiario extends Funcionario implements Trabalhavel{
         throw new UnsupportedOperationException("Unimplemented method 'relatarProgresso'");
     }
     
+    @Override
+    public String toString() {
+        return 
+        "Estagiário" +
+        "\nNome: " + this.getNome() +
+        "\nMatricula: " + this.getMatricula();
+    }
+    
 }

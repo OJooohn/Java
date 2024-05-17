@@ -8,8 +8,19 @@ public class Main {
         System.out.println("\033c");
     }
 
-    public static int adicionarFuncionario(Scanner sc, List<Funcionario> funcionarios){
+    public static String getInputNome(Scanner sc){
+        System.out.print("Digite o nome: ");
+        return sc.nextLine();
+    }
 
+    public static int getInputMatricula(Scanner sc){
+        System.out.print("Digite a matricula: ");
+        return Integer.parseInt(sc.nextLine());
+    }
+
+    public static void adicionarFuncionario(Scanner sc, List<Funcionario> funcionarios){
+
+        boolean cadastroCompleto = false;
         int opcao, matricula;
         String nome;
 
@@ -24,31 +35,78 @@ public class Main {
 
             switch(opcao){
                 case 1:
-                    System.out.print("Digite o nome: ");
-                    nome = sc.nextLine();
-                    System.out.print("Digite a matricula: ");
-                    matricula = Integer.parseInt(sc.nextLine());
+                    nome = getInputNome(sc);
+                    matricula = getInputMatricula(sc);
                     System.out.print("Digite o nome da equipe: ");
                     String equipe = sc.nextLine();
                     System.out.print("Digite o bônus anual: ");
                     float bonusAnual = Float.parseFloat(sc.nextLine());
                     funcionarios.add(new Gerente(nome, matricula, bonusAnual, equipe));
+                    cadastroCompleto = true;
                     break;
                 
                 case 2:
-
+                    nome = getInputNome(sc);
+                    matricula = getInputMatricula(sc);
+                    Desenvolvedor novoDesenvolvedor = new Desenvolvedor(nome, matricula);
+                    String tecnologia;
+                    do{
+                        System.out.println("[0] Para concluir cadastro");
+                        System.out.print("Digite a tecnologia: ");
+                        tecnologia = sc.nextLine();
+                        if(tecnologia.equals("0"))
+                            break;
+                        novoDesenvolvedor.adicionarTecnologia(tecnologia);
+                    }while(!tecnologia.equals("0"));
+                    funcionarios.add(novoDesenvolvedor);
+                    cadastroCompleto = true;
                     break;
 
                 case 3:
-
+                    nome = getInputNome(sc);
+                    matricula = getInputMatricula(sc);
+                    System.out.print("Digite a quantidade de horas trabalhadas: ");
+                    int horasTrabalhadas = Integer.parseInt(sc.nextLine());
+                    System.out.print("Digite o nome do supervisor: ");
+                    String supervisor = sc.nextLine();
+                    funcionarios.add(new Estagiario(nome, matricula, horasTrabalhadas, supervisor));
+                    cadastroCompleto = true;
                     break;
 
                 default: System.out.println("OPÇÃO INVÁLIDA! Digite novamente...");
 
             }
-        } while(opcao != 4);
-        
-        return 0;
+        } while(!cadastroCompleto);
+    }
+
+    public static void removerFuncionario(Scanner sc, List<Funcionario> funcionarios){
+
+        boolean funcionarioExistente = false;
+        int matriculaDigitada;
+
+        while(!funcionarioExistente){
+            System.out.println("#   REMOVER FUNCIONÁRIO   #");
+            System.out.print("Digite a matrícula remover: ");
+            matriculaDigitada = Integer.parseInt(sc.nextLine());
+
+            for(Funcionario f : funcionarios){
+                if(matriculaDigitada == f.getMatricula()){
+                    funcionarios.remove(f);
+                    System.out.println("Funcionário removida");
+                    return;
+                }
+            }
+
+            System.out.println("Funionário não cadastrado! Digite novamente...");
+        }
+
+    }
+
+    public static void listarFuncionarios(List<Funcionario> funcionarios){
+        for(Funcionario f : funcionarios){
+            System.out.println("=====================================");
+            System.out.println(f);
+        }
     }
     public static void main(String[] args) throws Exception {
 
@@ -74,9 +132,11 @@ public class Main {
                     break;
 
                 case 2:
-                break;
+                    removerFuncionario(sc, funcionarios);
+                    break;
 
                 case 3:
+                    listarFuncionarios(funcionarios);
                 break;
 
                 case 4:
