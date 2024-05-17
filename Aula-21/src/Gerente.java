@@ -3,8 +3,8 @@ public class Gerente extends Funcionario implements Trabalhavel{
     private float bonusAnual;
     private String equipe;
 
-    Gerente(String nome, int matricula, float bonusAnual, String equipe) {
-        super(nome, matricula);
+    Gerente(String nome, int matricula, float salario, float bonusAnual, String equipe) {
+        super(nome, matricula, salario);
         this.bonusAnual = bonusAnual;
         this.equipe = equipe;
     }
@@ -23,10 +23,13 @@ public class Gerente extends Funcionario implements Trabalhavel{
         throw new UnsupportedOperationException("Unimplemented method 'calcularSalario'");
     }
 
+    public void calcularOutroSalario(){
+
+    }
+
     @Override
     public void trabalhar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'trabalhar'");
+        System.out.println("Gerente trabalhando...");
     }
 
     @Override
@@ -40,7 +43,8 @@ public class Gerente extends Funcionario implements Trabalhavel{
         return 
         "Gerente" +
         "\nNome: " + this.getNome() +
-        "\nMatricula: " + this.getMatricula();
+        "\nMatricula: " + this.getMatricula() +
+        "\nSalário: " + this.getSalario();
     }
     
 }

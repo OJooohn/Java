@@ -5,8 +5,8 @@ public class Desenvolvedor extends Funcionario implements Trabalhavel{
 
     private List<String> tecnologias;
 
-    Desenvolvedor(String nome, int matricula) {
-        super(nome, matricula);
+    Desenvolvedor(String nome, int matricula, float salario) {
+        super(nome, matricula, salario);
         this.tecnologias = new ArrayList<String>();
     }
 
@@ -27,8 +27,8 @@ public class Desenvolvedor extends Funcionario implements Trabalhavel{
 
     @Override
     public void trabalhar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'trabalhar'");
+        System.out.println("Desenvolvedor trabalhando...");
+
     }
 
     @Override
@@ -42,7 +42,8 @@ public class Desenvolvedor extends Funcionario implements Trabalhavel{
         return 
         "Desenvolvedor" +
         "\nNome: " + this.getNome() +
-        "\nMatricula: " + this.getMatricula();
+        "\nMatricula: " + this.getMatricula() +
+        "\nSalário: " + this.getSalario();
     }
     
 }

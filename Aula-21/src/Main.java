@@ -18,10 +18,16 @@ public class Main {
         return Integer.parseInt(sc.nextLine());
     }
 
-    public static void adicionarFuncionario(Scanner sc, List<Funcionario> funcionarios){
+    public static float getInputSalario(Scanner sc){
+        System.out.print("Digite o salario: ");
+        return Float.parseFloat(sc.nextLine());
+    }
+
+    public static void adicionarFuncionario(Scanner sc, List<Funcionario> funcionarios, List<Trabalhavel> funcionariosTrabalhadores){
 
         boolean cadastroCompleto = false;
         int opcao, matricula;
+        float salario;
         String nome;
 
         do {
@@ -37,18 +43,22 @@ public class Main {
                 case 1:
                     nome = getInputNome(sc);
                     matricula = getInputMatricula(sc);
+                    salario = getInputSalario(sc);
                     System.out.print("Digite o nome da equipe: ");
                     String equipe = sc.nextLine();
                     System.out.print("Digite o bônus anual: ");
                     float bonusAnual = Float.parseFloat(sc.nextLine());
-                    funcionarios.add(new Gerente(nome, matricula, bonusAnual, equipe));
+                    Gerente novoGerente = new Gerente(nome, matricula, salario, bonusAnual, equipe);
+                    funcionarios.add(novoGerente);
+                    funcionariosTrabalhadores.add(novoGerente);
                     cadastroCompleto = true;
                     break;
                 
                 case 2:
                     nome = getInputNome(sc);
                     matricula = getInputMatricula(sc);
-                    Desenvolvedor novoDesenvolvedor = new Desenvolvedor(nome, matricula);
+                    salario = getInputSalario(sc);
+                    Desenvolvedor novoDesenvolvedor = new Desenvolvedor(nome, matricula, salario);
                     String tecnologia;
                     do{
                         System.out.println("[0] Para concluir cadastro");
@@ -59,17 +69,19 @@ public class Main {
                         novoDesenvolvedor.adicionarTecnologia(tecnologia);
                     }while(!tecnologia.equals("0"));
                     funcionarios.add(novoDesenvolvedor);
+                    funcionariosTrabalhadores.add(novoDesenvolvedor);
                     cadastroCompleto = true;
                     break;
 
                 case 3:
                     nome = getInputNome(sc);
                     matricula = getInputMatricula(sc);
+                    salario = getInputSalario(sc);
                     System.out.print("Digite a quantidade de horas trabalhadas: ");
                     int horasTrabalhadas = Integer.parseInt(sc.nextLine());
                     System.out.print("Digite o nome do supervisor: ");
                     String supervisor = sc.nextLine();
-                    funcionarios.add(new Estagiario(nome, matricula, horasTrabalhadas, supervisor));
+                    funcionarios.add(new Estagiario(nome, matricula, salario, horasTrabalhadas, supervisor));
                     cadastroCompleto = true;
                     break;
 
@@ -108,11 +120,33 @@ public class Main {
             System.out.println(f);
         }
     }
+
+    public static void calcularSalario(List<Funcionario> funcionarios){
+        for(int i = 0; i < funcionarios.size(); i++){
+            funcionarios.get(i).calcularSalario();
+
+            if(funcionarios.get(i).getClass() == Gerente.class){
+                Gerente aux = (Gerente) funcionarios.get(i);
+                aux.calcularOutroSalario();
+            } else  if(funcionarios.get(i).getClass() == Estagiario.class) {
+                Estagiario aux = (Estagiario) funcionarios.get(i);
+                aux.pegarCafe();
+            }
+
+        }
+    }
+
+    public static void mandarTrabalhar(List<Trabalhavel> funcionariosTrabalhadores){
+        for(Trabalhavel t : funcionariosTrabalhadores){
+            t.trabalhar();
+        }
+    }
     public static void main(String[] args) throws Exception {
 
         Scanner sc =new Scanner(System.in);
 
         List<Funcionario> funcionarios = new ArrayList<>();
+        List<Trabalhavel> funcionariosTrabalhadores = new ArrayList<>();
 
         int opcao;
 
@@ -122,13 +156,14 @@ public class Main {
             System.out.println("[1] Adicionar funcionário");
             System.out.println("[2] Remover funcionário");
             System.out.println("[3] Listar funcionários");
-            System.out.println("[4] Finalizar programa");
+            System.out.println("[4] Mandar trabalhar");
+            System.out.println("[5] Finalizar programa");
             System.out.print("Selecione uma opção: ");
             opcao = Integer.parseInt(sc.nextLine());
 
             switch(opcao){
                 case 1:
-                    adicionarFuncionario(sc, funcionarios);
+                    adicionarFuncionario(sc, funcionarios, funcionariosTrabalhadores);
                     break;
 
                 case 2:
@@ -137,15 +172,16 @@ public class Main {
 
                 case 3:
                     listarFuncionarios(funcionarios);
-                break;
+                    break;
 
                 case 4:
-                break;
+                    mandarTrabalhar(funcionariosTrabalhadores);
+                    break;
 
                 default: System.out.println("OPÇÃO INVÁLIDA! Digite novamente...");
             }
 
-        } while(opcao != 4);
+        } while(opcao != 5);
 
     }
 }

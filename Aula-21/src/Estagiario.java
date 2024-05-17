@@ -1,10 +1,10 @@
-public class Estagiario extends Funcionario implements Trabalhavel{
+public class Estagiario extends Funcionario{
 
     private int horasDeTrabalho;
     private String supervisor;
 
-    Estagiario(String nome, int matricula, int horasDeTrabalho, String supervisor) {
-        super(nome, matricula);
+    Estagiario(String nome, int matricula, float salario, int horasDeTrabalho, String supervisor) {
+        super(nome, matricula, salario);
         this.horasDeTrabalho = horasDeTrabalho;
         this.supervisor = supervisor;
     }
@@ -17,22 +17,14 @@ public class Estagiario extends Funcionario implements Trabalhavel{
         return this.supervisor;
     }
 
+    public void pegarCafe(){
+        System.out.println("Estagiario pegando café...");
+    }
+
     @Override
     public float calcularSalario() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'calcularSalario'");
-    }
-
-    @Override
-    public void trabalhar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'trabalhar'");
-    }
-
-    @Override
-    public void relatarProgresso() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'relatarProgresso'");
     }
     
     @Override
@@ -40,7 +32,8 @@ public class Estagiario extends Funcionario implements Trabalhavel{
         return 
         "Estagiário" +
         "\nNome: " + this.getNome() +
-        "\nMatricula: " + this.getMatricula();
+        "\nMatricula: " + this.getMatricula() +
+        "\nSalário: " + this.getSalario();
     }
     
 }
