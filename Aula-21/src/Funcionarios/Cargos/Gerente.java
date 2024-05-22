@@ -1,22 +1,24 @@
-import java.util.ArrayList;
-import java.util.List;
+package Funcionarios.Cargos;
+import Funcionarios.Funcionario;
+import Interfaces.Trabalhavel;
 
-public class Desenvolvedor extends Funcionario implements Trabalhavel{
+public class Gerente extends Funcionario implements Trabalhavel{
 
-    private List<String> tecnologias;
+    private float bonusAnual;
+    private String equipe;
 
-    Desenvolvedor(String nome, int matricula, float salario) {
+    public Gerente(String nome, int matricula, float salario, float bonusAnual, String equipe) {
         super(nome, matricula, salario);
-        this.tecnologias = new ArrayList<String>();
+        this.bonusAnual = bonusAnual;
+        this.equipe = equipe;
     }
 
-    public void adicionarTecnologia(String tecnologia){
-        this.tecnologias.add(tecnologia);
+    public float getBonusAnual(){
+        return this.bonusAnual;
     }
 
-    public void listarTecnologias(){
-        System.out.println("Tecnologias dominantes:");
-        System.out.println(tecnologias);
+    public String getEquipe(){
+        return this.equipe;
     }
 
     @Override
@@ -25,10 +27,13 @@ public class Desenvolvedor extends Funcionario implements Trabalhavel{
         throw new UnsupportedOperationException("Unimplemented method 'calcularSalario'");
     }
 
+    public void calcularOutroSalario(){
+
+    }
+
     @Override
     public void trabalhar() {
-        System.out.println("Desenvolvedor trabalhando...");
-
+        System.out.println("Gerente trabalhando...");
     }
 
     @Override
@@ -40,7 +45,7 @@ public class Desenvolvedor extends Funcionario implements Trabalhavel{
     @Override
     public String toString() {
         return 
-        "Desenvolvedor" +
+        "Gerente" +
         "\nNome: " + this.getNome() +
         "\nMatricula: " + this.getMatricula() +
         "\nSalário: " + this.getSalario();

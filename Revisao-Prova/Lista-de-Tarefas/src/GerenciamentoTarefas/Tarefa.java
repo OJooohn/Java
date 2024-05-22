@@ -1,4 +1,6 @@
-public class Tarefa implements ListaTarefas{
+package GerenciamentoTarefas;
+
+public class Tarefa {
 
     private String descricao;
     private boolean concluido;
@@ -22,28 +24,18 @@ public class Tarefa implements ListaTarefas{
         return this.categoria;
     }
 
-    @Override
-    public void adicionar() {
-
+    public String imprimirStatus(){
+        if(this.getConcluido())
+            return "concluído";
+        else
+            return "não concluído";
     }
 
     @Override
-    public void remover() {
-
-    }
-
-    @Override
-    public void concluir() {
-
-    }
-
-    @Override
-    public void listarTodos() {
-
-    }
-
-    @Override
-    public void listarPorCategoria() {
-
+    public String toString() {
+        return
+        "\nCategoria: " + categoria +
+        "\nDescrição: " + descricao +
+        "\nStatus: " + imprimirStatus();
     }
 }

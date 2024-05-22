@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import Funcionarios.Funcionario;
+import Funcionarios.Cargos.*;
+import Interfaces.Trabalhavel;
+
 public class Main {
 
     public static void limparTela(){

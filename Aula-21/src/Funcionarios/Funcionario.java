@@ -1,10 +1,12 @@
+package Funcionarios;
+
 public abstract class Funcionario {
     
     private String nome;
     private int matricula;
     private float salario;
 
-    Funcionario(String nome, int matricula, float salario){
+    protected Funcionario(String nome, int matricula, float salario){
         this.nome = nome;
         this.matricula = matricula;
         this.salario = salario;
